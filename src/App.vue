@@ -1,4 +1,6 @@
 <script setup>
+import {ref} from 'vue';
+import ViewPort from './components/ViewPort.vue';
 
 </script>
 
@@ -10,8 +12,8 @@
     <div class="__userInterface">
       <h1>User Interface</h1>
     </div>
-    <div :ref="canvas" class="__viewPort" >
-      <h1>Canvas</h1>
+    <div  class="__viewPort" >
+      <ViewPort />
   </div>
 </span>
 </template>
@@ -35,7 +37,7 @@
     }
    .__viewPort{
       grid-area: viewport;
-      background-color: red;
+      
       height: 100vh;
     }
 </style>
