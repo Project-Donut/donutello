@@ -3,6 +3,7 @@
 </script>
 
 <template>
+  <span class="app">
    <div class="__header">
       <h1>Header</h1>
     </div>
@@ -12,11 +13,11 @@
     <div :ref="canvas" class="__viewPort" >
       <h1>Canvas</h1>
   </div>
- 
+</span>
 </template>
 
 <style scoped>
-template{
+.app{
     display: grid;
     grid-template-columns: 4fr 8fr;
     grid-template-rows: 200px 1fr;
