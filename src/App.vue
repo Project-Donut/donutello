@@ -21,24 +21,24 @@ import UserInterface from './components/UserInterface.vue';
 
 <style scoped>
 .app{
+   
     display: grid;
     grid-template-columns: 4fr 8fr;
     grid-template-rows: 200px 1fr;
     grid-template-areas: 
     "header viewport"
     "ui viewport";
+    
 }
     .__header{
       grid-area: header;
       background-color: blanchedalmond;
     }
     .__uiserInterface{
-      
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      
       grid-area: ui;
       background-color: aquamarine;
     }
