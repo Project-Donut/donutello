@@ -12,9 +12,7 @@ const canvasSetup = () => {
 onMounted(()=>{
     
     canvasSetup();
-    
-    
-    
+
 });
 
 

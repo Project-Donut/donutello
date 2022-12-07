@@ -35,8 +35,12 @@ export default class ThreeScene {
         loader.load('/bignut.glb', (gltf) => {
             donut = gltf.scene;
             donut.scale.set(40,40,40);
+            donut.rotation.y = Math.PI / -1.7;
             this.scene.add(donut);
         });
+        //rotate donut 90 degrees
+        
+
 
   }
   orbitSetup() {

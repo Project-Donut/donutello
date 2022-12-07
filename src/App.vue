@@ -1,6 +1,7 @@
 <script setup>
 import {ref} from 'vue';
 import ViewPort from './components/ViewPort.vue';
+import UserInterface from './components/UserInterface.vue';
 
 </script>
 
@@ -10,7 +11,7 @@ import ViewPort from './components/ViewPort.vue';
       <h1>Header</h1>
     </div>
     <div class="__userInterface">
-      <h1>User Interface</h1>
+      <UserInterface />
     </div>
     <div  class="__viewPort" >
       <ViewPort />
@@ -32,6 +33,12 @@ import ViewPort from './components/ViewPort.vue';
       background-color: blanchedalmond;
     }
     .__uiserInterface{
+      
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      
       grid-area: ui;
       background-color: aquamarine;
     }
