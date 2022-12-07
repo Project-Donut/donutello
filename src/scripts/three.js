@@ -28,11 +28,14 @@ export default class ThreeScene {
     this.animate();
   }
   modelSetup() {
-       //box model
-         const geometry = new THREE.BoxGeometry(1, 1, 1);
-            const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-            const cube = new THREE.Mesh(geometry, material);
-            this.scene.add(cube);
+        //import donut glb
+        let donut;
+        const loader = new GLTFLoader();
+        loader.load('/bignut.glb', (gltf) => {
+            donut = gltf.scene;
+            donut.scale.set(40,40,40);
+            this.scene.add(donut);
+        });
 
   }
   orbitSetup() {
