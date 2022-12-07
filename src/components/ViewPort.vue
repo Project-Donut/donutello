@@ -1,20 +1,19 @@
 <script setup>
-import { onMounted,ref, render } from 'vue';
-import model from '../scripts/three.js';
-
+import { onMounted,ref, render, toHandlerKey } from 'vue';
+import ThreeScene from '../scripts/three.js';
+const viewPort = ref(null);
+const canvasSetup = () => {
+    if(viewPort.value){
+    const model =  new ThreeScene(viewPort.value);
+    model.sceneSetup();
+}
+}
 
 onMounted(()=>{
     
-    const viewPort = ref(model);
+    canvasSetup();
     
-    //import donut glb
-    //let donut;
-    //const loader = new GLTFLoader();
-    //loader.load('/bignut.glb', (gltf) => {
-    //    donut = gltf.scene;
-      //  donut.scale.set(40,40,40);
-       // scene.add(donut);
-    //});
+    
     
 });
 
@@ -23,12 +22,14 @@ onMounted(()=>{
 </script>
 
 <template>
-  <canvas ref="viewPort"> 
-  </canvas>
-  <h1>test</h1>
+    <div class="viewPort" ref="viewPort"></div>
+
 </template>
 
 <style scoped>
+div{
+    height: 100vh;
+}
 h1{
     background-color: red;
 }
