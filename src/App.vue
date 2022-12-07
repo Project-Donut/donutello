@@ -37,7 +37,7 @@ import ViewPort from './components/ViewPort.vue';
     }
    .__viewPort{
       grid-area: viewport;
-      
+      background-color: #FF4C8E;
       height: 100vh;
     }
 </style>
