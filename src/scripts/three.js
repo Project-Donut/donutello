@@ -10,8 +10,10 @@ export default class ThreeScene {
     this.scene;
     this.camera;
     this.renderer;
+    this.dough
   }
-
+  
+  
   sceneSetup() {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(75, this.view.offsetWidth / this.view.offsetHeight, 0.1, 1000);
@@ -20,37 +22,41 @@ export default class ThreeScene {
     this.renderer.setSize(this.view.offsetWidth, this.view.offsetHeight);
     console.log(this.view);
     this.view.appendChild(this.renderer.domElement);
-    this.renderer.setClearColor(0x000000, 0)
-
+    this.renderer.setClearColor(0x000000, 0);
     this.render();
     this.orbitSetup();
     this.lightsSetup();
     this.modelSetup();
     this.animate();
   }
+  loadDonut(gltf){
+    let donut = gltf.scene;
+    donut.scale.set(40,40,40);
+    donut.rotation.y = Math.PI / -1.7;
+    this.scene.add(donut);
+    donut.traverse((child) => {
+        if (child.isMesh) {
+             this.dough = donut.getObjectByName('Torus');
+             this.donutBite = donut.getObjectByName('Torus_1');
+             this.filling = donut.getObjectByName('filling');
+             this.icing = donut.getObjectByName('Torus002');
+             this.sprinkles = donut.getObjectByName('Torus002_1');
+            
+        }
+        
+    });
+    //code die pas uitgevoerd wordt als de donut geladen is
+    console.log(this.dough);
+  }
   modelSetup() {
         //import donut glb
-        let donut;
         const loader = new GLTFLoader();
-        loader.load('/bignut.glb', (gltf) => {
-            donut = gltf.scene;
-            donut.scale.set(40,40,40);
-            donut.rotation.y = Math.PI / -1.7;
-            this.scene.add(donut);
-            donut.traverse((child) => {
-                if (child.isMesh) {
-                    const dough = donut.getObjectByName('Torus');
-                    const donutBite = donut.getObjectByName('Torus_1');
-                    const filling = donut.getObjectByName('filling');
-                    const icing = donut.getObjectByName('Torus002');
-                    const sprinkles = donut.getObjectByName('Torus002_1');
-                }
-            });
-        });
-        
-
-
+        loader.load('/bignut.glb', this.loadDonut.bind(this));
   }
+  printMesh(){
+    console.log(dough);
+  }
+  
   orbitSetup() {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement)
         this.controls.enableDamping = true;

@@ -6,8 +6,9 @@ const canvasSetup = () => {
     if(viewPort.value){
     const model =  new ThreeScene(viewPort.value);
     model.sceneSetup();
+    }
 }
-}
+
 
 onMounted(()=>{
     
