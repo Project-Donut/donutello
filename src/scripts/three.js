@@ -37,8 +37,16 @@ export default class ThreeScene {
             donut.scale.set(40,40,40);
             donut.rotation.y = Math.PI / -1.7;
             this.scene.add(donut);
+            donut.traverse((child) => {
+                if (child.isMesh) {
+                    const dough = donut.getObjectByName('Torus');
+                    const donutBite = donut.getObjectByName('Torus_1');
+                    const filling = donut.getObjectByName('filling');
+                    const icing = donut.getObjectByName('Torus002');
+                    const sprinkles = donut.getObjectByName('Torus002_1');
+                }
+            });
         });
-        //rotate donut 90 degrees
         
 
 
@@ -86,5 +94,6 @@ animate = () => {
 
   render() {
     this.renderer.render(this.scene, this.camera);
+    
   }
 }
