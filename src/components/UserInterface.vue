@@ -3,6 +3,9 @@
 import {ref, render, toHandlerKey, defineProps} from 'vue';
 const props = defineProps(['model']);
 
+    console.log(props.model.icing);
+
+ 
 
 </script>
 

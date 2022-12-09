@@ -10,6 +10,7 @@ export default class ThreeScene {
     this.scene;
     this.camera;
     this.renderer;
+    this.isLoaded = false;
   }
   
   
@@ -19,7 +20,7 @@ export default class ThreeScene {
     this.camera.position.z = 5;
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setSize(this.view.offsetWidth, this.view.offsetHeight);
-    console.log(this.view);
+    
     this.view.appendChild(this.renderer.domElement);
     this.renderer.setClearColor(0x000000, 0);
     this.render();
@@ -46,15 +47,11 @@ export default class ThreeScene {
         
     });
     //code die pas uitgevoerd wordt als de donut geladen is
-    console.log(this.dough,'is de deeg');
-    console.log(this.icing,'is de icing');
+    this.loaded = true;
     
   }
    
   loadIcing(flavour){
-    //console.log(flavour.value);
-    //console.log(this.loadDonut.donut);
-    //console.log(this.icing,'is de icing');
     this.icing.material.color.setHex(flavour.value);
     
 }

@@ -24,8 +24,9 @@ onMounted(()=>{
    <div class="__header">
       <h1>Header</h1>
     </div>
-    <div class="__userInterface">
-      <UserInterface :model="model" />
+    <div class="__userInterface" >
+      
+      <UserInterface v-if="model" :model="model" />
     </div>
     <div  class="__viewPort" >
       <div class="viewPort" ref="viewPort"></div>
