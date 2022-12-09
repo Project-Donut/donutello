@@ -10,7 +10,6 @@ export default class ThreeScene {
     this.scene;
     this.camera;
     this.renderer;
-    this.dough
   }
   
   
@@ -27,6 +26,7 @@ export default class ThreeScene {
     this.orbitSetup();
     this.lightsSetup();
     this.modelSetup();
+    
     this.animate();
   }
   loadDonut(gltf){
@@ -46,16 +46,24 @@ export default class ThreeScene {
         
     });
     //code die pas uitgevoerd wordt als de donut geladen is
-    console.log(this.dough);
+    console.log(this.dough,'is de deeg');
+    console.log(this.icing,'is de icing');
+    
   }
+   
+  loadIcing(flavour){
+    //console.log(flavour.value);
+    //console.log(this.loadDonut.donut);
+    //console.log(this.icing,'is de icing');
+    this.icing.material.color.setHex(flavour.value);
+    
+}
   modelSetup() {
         //import donut glb
         const loader = new GLTFLoader();
         loader.load('/bignut.glb', this.loadDonut.bind(this));
   }
-  printMesh(){
-    console.log(dough);
-  }
+  
   
   orbitSetup() {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement)

@@ -1,6 +1,8 @@
 <script setup>
 //import vue
-import {ref, render, toHandlerKey} from 'vue';
+import {ref, render, toHandlerKey, defineProps} from 'vue';
+const props = defineProps(['model']);
+
 
 </script>
 
