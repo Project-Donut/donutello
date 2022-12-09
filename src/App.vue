@@ -1,8 +1,23 @@
 <script setup>
-import {ref} from 'vue';
+import {ref, onMounted} from 'vue';
 import ViewPort from './components/ViewPort.vue';
 import UserInterface from './components/UserInterface.vue';
+import ThreeScene from './scripts/three.js';
+let model = ref(null);
+let taste = ref('0xd19c0a');
+let viewPort = ref(null);
+const canvasSetup = () => {
+    if(viewPort.value){
+    model.value =  new ThreeScene(viewPort.value);
+    model.value.sceneSetup();
+    //model.value.loadIcing(taste);
+    }
+}
+onMounted(()=>{
+    
+    canvasSetup();
 
+});
 </script>
 
 <template>
@@ -11,15 +26,18 @@ import UserInterface from './components/UserInterface.vue';
       <h1>Header</h1>
     </div>
     <div class="__userInterface">
-      <UserInterface />
+      <UserInterface :model="model" />
     </div>
     <div  class="__viewPort" >
-      <ViewPort />
+      <div class="viewPort" ref="viewPort"></div>
   </div>
 </span>
 </template>
 
 <style scoped>
+.viewPort{
+  height: 100vh;
+}
 .app{
    
     display: grid;
