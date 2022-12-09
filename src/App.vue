@@ -1,6 +1,5 @@
 <script setup>
 import {ref, onMounted} from 'vue';
-import ViewPort from './components/ViewPort.vue';
 import UserInterface from './components/UserInterface.vue';
 import ThreeScene from './scripts/three.js';
 let model = ref(null);
