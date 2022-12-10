@@ -4,17 +4,21 @@ import {ref, render, reactive, defineProps} from 'vue';
 //create reactive state to send to api
 let state = reactive({order: []});
 const props = defineProps(['model']);
+let icingFlavour = ref(null);
 let icing = ref(null);
 const updateIcing = () => {
     if(icing.value){
         props.model.loadIcing(ref(icing.value));}
-        const icingFlavour = icing.value;
-        //ISSUE: pusht elke keer de geselecteerde value ipv ze updaten.
-        state.order.push(icingFlavour);
-        //console.log(state.order);
-        //ISSUE END
+        icingFlavour = icing.value;
+        
         
     }
+const createOrder = () =>{
+        
+        state.order.push(icingFlavour);
+        console.log(state.order);
+        
+}
     
  
 
@@ -46,7 +50,7 @@ const updateIcing = () => {
         </select>
      
 
-        <button class="__input">Save this Nutty man</button>
+        <button class="__input" href="#" @click="createOrder()">Save this Nutty man</button>
     </div>
     
 
