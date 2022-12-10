@@ -2,9 +2,12 @@
 //import vue
 import {ref, render, toHandlerKey, defineProps} from 'vue';
 const props = defineProps(['model']);
-
-    console.log(props.model.icing);
-
+let selected = ref(null);
+const updateIcing = () => {
+    if(selected.value){
+        props.model.loadIcing(ref(selected.value));}
+    }
+    
  
 
 </script>
@@ -13,10 +16,13 @@ const props = defineProps(['model']);
     <div class="userInput">
         <input class="__input" type="text" placeholder="Name your nutty boy">
         <label for="flavours">Choose your flavour</label>
-        <select name="flavours" class="__input">
-            <option value="strawberry">strawberry</option>
-            <option value="choccy">choccy</option>
-            <option value="vanilla">vanilla</option>   
+        <select name="flavours" class="__input" v-model="selected" @click="updateIcing()">
+            <option disabled value=null>Please select a flavour</option>
+            <option value="0xc71639" >
+                strawberry
+            </option>
+            <option value="0x803721">choccy</option>
+            <option value="0xedc568">vanilla</option>   
         </select>
         <label for="sprinkles">You want sprinkies?</label>
         <select name="sprinkles" class="__input __input-sprinkles">
