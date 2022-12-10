@@ -52,8 +52,13 @@ export default class ThreeScene {
   }
    
   loadIcing(flavour){
-    this.icing.material.color.setHex(flavour.value);
-    
+    this.icing.material.color.setHex(flavour.value);    
+}
+ loadFilling(flavour){
+    this.filling.material.color.setHex(flavour.value);
+}
+    loadSprinkles(flavour){
+    this.sprinkles.material.color.setHex(flavour.value);
 }
   modelSetup() {
         //import donut glb
