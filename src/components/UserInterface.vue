@@ -1,11 +1,19 @@
 <script setup>
 //import vue
-import {ref, render, toHandlerKey, defineProps} from 'vue';
+import {ref, render, reactive, defineProps} from 'vue';
+//create reactive state to send to api
+let state = reactive({order: []});
 const props = defineProps(['model']);
-let selected = ref(null);
+let icing = ref(null);
 const updateIcing = () => {
-    if(selected.value){
-        props.model.loadIcing(ref(selected.value));}
+    if(icing.value){
+        props.model.loadIcing(ref(icing.value));}
+        const icingFlavour = icing.value;
+        //ISSUE: pusht elke keer de geselecteerde value ipv ze updaten.
+        state.order.push(icingFlavour);
+        //console.log(state.order);
+        //ISSUE END
+        
     }
     
  
@@ -16,7 +24,7 @@ const updateIcing = () => {
     <div class="userInput">
         <input class="__input" type="text" placeholder="Name your nutty boy">
         <label for="flavours">Choose your flavour</label>
-        <select name="flavours" class="__input" v-model="selected" @click="updateIcing()">
+        <select name="flavours" class="__input" v-model="icing" @click="updateIcing()">
             <option disabled value=null>Please select a flavour</option>
             <option value="0xc71639" >
                 strawberry
