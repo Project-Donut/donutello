@@ -22,6 +22,9 @@ const updateFilling = () => {
     }
         fillingFlavour = filling.value;  
 }
+const selectTopping = () => {
+    console.log(props.model.sprinkles)
+}
 const createOrder = () =>{
         
         state.order.push(icingFlavour, fillingFlavour);
@@ -54,12 +57,12 @@ const createOrder = () =>{
             <option value="0x000000">No filling</option>
         </select>
 
-        <label for="sprinkles">You want sprinkies?</label>
-        <select name="sprinkles" class="__input __input-sprinkles">
-            <option value="rainbow">rainbow sprinkies</option>
-            <option value="choccy">choccy sprinkies</option>
-            <option value="vanilla">vanilla sprinkies</option>
-            <option value="none">No sprinkies</option>
+        <label for="topping">Selecteer een topping!</label>
+        <select name="topping" class="__input __input-topping" v-model="topping" @click="selectTopping()">
+            <option value="sprinkles">Sprinkles</option>
+            <option value="flakes">Flakes</option>
+            <option value="crumble">Crumble</option>
+            <option value="none">Geen topping</option>
         </select>
 
         <label for="balls">Balls?</label>
