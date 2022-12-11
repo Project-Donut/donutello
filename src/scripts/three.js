@@ -35,20 +35,16 @@ export default class ThreeScene {
     donut.scale.set(40,40,40);
     donut.rotation.y = Math.PI / -1.7;
     this.scene.add(donut);
-    donut.traverse((child) => {
-        if (child.isMesh) {
-          //console log children of donut
-             
-             this.filling = donut.getObjectByName('filling');
-             this.icing = donut.getObjectByName('Icing001');
-             this.sprinkles = donut.getObjectByName('sprinkles');
-             this.crumble = donut.getObjectByName('crumble');
-             this.flakes = donut.getObjectByName('flakes');
-            
-        }
-        
-    });
+    this.filling = donut.getObjectByName('filling');
+    this.icing = donut.getObjectByName('Icing001');
+    this.sprinkles = donut.getObjectByName('sprinkles');
+    this.crumble = donut.getObjectByName('crumble');
+    this.flakes = donut.getObjectByName('flakes');
+    
     //code die pas uitgevoerd wordt als de donut geladen is
+    this.crumble.visible=false;
+    this.flakes.visible=false;
+    this.sprinkles.visible=true;
     this.loaded = true;
     
   } 

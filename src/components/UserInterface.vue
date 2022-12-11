@@ -6,6 +6,7 @@ let state = reactive({order: []});
 const props = defineProps(['model']);
 let icingFlavour = ref(null);
 let icing = ref(null);
+let topping = ref(0);
 let filling = ref('0xffffff');
 let fillingFlavour = ref(null);
 const updateIcing = () => {
@@ -23,8 +24,19 @@ const updateFilling = () => {
         fillingFlavour = filling.value;  
 }
 const selectTopping = () => {
-    console.log(props.model.sprinkles)
-}
+    const toppings=[ props.model.sprinkles,props.model.flakes, props.model.crumble];
+    if(topping.value != 3){
+    toppings.forEach(topping => {
+        topping.visible = false;
+    });
+    toppings[topping.value].visible = true;
+    }
+         else{
+    toppings.forEach(topping => {
+        topping.visible = false;
+    });
+ } 
+    }
 const createOrder = () =>{
         
         state.order.push(icingFlavour, fillingFlavour);
@@ -59,10 +71,10 @@ const createOrder = () =>{
 
         <label for="topping">Selecteer een topping!</label>
         <select name="topping" class="__input __input-topping" v-model="topping" @click="selectTopping()">
-            <option value="sprinkles">Sprinkles</option>
-            <option value="flakes">Flakes</option>
-            <option value="crumble">Crumble</option>
-            <option value="none">Geen topping</option>
+            <option selected value=0>Sprinkles</option>
+            <option value=1>Flakes</option>
+            <option value=2>Crumble</option>
+            <option value=3>Geen topping</option>
         </select>
 
         <label for="balls">Balls?</label>
