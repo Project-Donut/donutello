@@ -1,31 +1,68 @@
 <script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './components/HelloWorld.vue'
+import {ref, onMounted} from 'vue';
+import UserInterface from './components/UserInterface.vue';
+import ThreeScene from './scripts/three.js';
+let model = ref(null);
+let taste = ref('0xd19c0a');
+let viewPort = ref(null);
+const canvasSetup = () => {
+    if(viewPort.value){
+    model.value =  new ThreeScene(viewPort.value);
+    model.value.sceneSetup();
+    //model.value.loadIcing(taste);
+    }
+}
+onMounted(()=>{
+    
+    canvasSetup();
+
+});
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <span class="app">
+   <div class="__header">
+      <h1>Header</h1>
+    </div>
+    <div class="__userInterface" >
+      
+      <UserInterface v-if="model" :model="model" />
+    </div>
+    <div  class="__viewPort" >
+      <div class="viewPort" ref="viewPort"></div>
   </div>
-  <HelloWorld msg="Vite + Vue" />
+</span>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
+.viewPort{
+  height: 100vh;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.app{
+   
+    display: grid;
+    grid-template-columns: 4fr 8fr;
+    grid-template-rows: 200px 1fr;
+    grid-template-areas: 
+    "header viewport"
+    "ui viewport";
+    
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+    .__header{
+      grid-area: header;
+      background-color: blanchedalmond;
+    }
+    .__uiserInterface{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      grid-area: ui;
+      background-color: aquamarine;
+    }
+   .__viewPort{
+      grid-area: viewport;
+      background-color: #FF4C8E;
+      height: 100vh;
+    }
 </style>
