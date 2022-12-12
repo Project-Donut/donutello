@@ -10,7 +10,7 @@
       },
       {
         "taste": "Snickers",
-        "color": "0x07748"
+        "color": "0xbc6138"
       },
       {
         "taste": "Oreo",
@@ -35,18 +35,40 @@
     ],
     "sprinkles": [
       {
-        "name": "Roze",
-        "colour": "0xef9baa"
+        "name": "Wit",
+        "color": "0xf8f6f0"
         
       }, 
       {
-        "name": "Wit",
-        "colour": "0xf8f6f0"
+        "name": "Roze",
+        "color": "0xef9baa"
         
       }, 
       {
         "name": "Bruin",
-        "colour": "0x7e4e1d"
+        "color": "0x592720"
+
+      }
+    ],
+    "crumble": [
+      {
+        "name": "Oreo",
+        "color": "0xdee0e0"
+        
+      }, 
+      {
+        "name": "Snickers",
+        "color": "0xbc6138"
+        
+      }, 
+      {
+        "name": "Kokos",
+        "color": "0xedf2f3"
+
+      },
+      {
+        "name": "Pistache",
+        "color": "0x9cbe80"
 
       }
     ],

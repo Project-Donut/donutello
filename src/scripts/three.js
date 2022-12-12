@@ -27,7 +27,6 @@ export default class ThreeScene {
     this.orbitSetup();
     this.lightsSetup();
     this.modelSetup();
-    
     this.animate();
   }
   loadDonut(gltf){
@@ -57,6 +56,13 @@ export default class ThreeScene {
 }
     loadSprinkles(flavour){
     this.sprinkles.material.color.setHex(flavour.value);
+}
+loadTopping(flavour){
+    this.sprinkles.material.color.setHex(flavour.value);
+    this.flakes.material.color.setHex(flavour.value);
+}
+loadCrumble(flavour){
+    this.crumble.material.color.setHex(flavour.value);
 }
   modelSetup() {
         //import donut glb
