@@ -18,18 +18,22 @@ let fillingFlavour = ref(null);
 let toppingSelected = ref(null);
 let toppingFlavourSelected = ref(null);
 const updateIcing = () => {
-    if (icing.value) {
-        props.model.loadIcing(ref(icing.value));
+    if (icing.value !== null) {
+        props.model.loadIcing(flavour.value.glaze[icing.value].color);
+        icingFlavour = flavour.value.glaze[icing.value].taste;
     }
-    icingFlavour = icing.value;
+    
+    
+    
 }
 const updateFilling = () => {
-    if (filling.value && filling.value != '0x000000') {
+    if (filling.value && filling.value !== '0x000000') {
         props.model.loadFilling(ref(filling.value));
         props.model.filling.visible = true;
     } else {
         props.model.filling.visible = false;
     }
+    console.log(filling + ' is the filling flavour')
     fillingFlavour = filling.value;
 }
 const selectTopping = () => {
@@ -49,6 +53,7 @@ const selectTopping = () => {
         toppingsAll.forEach(topping => {
             topping.visible = false;
         });
+        console.log(topping + ' is the topping')
         toppingSelected = toppingsAll[topping.value].value;
     }
 }
@@ -62,7 +67,8 @@ const updateTopping = () => {
 
         props.model.loadCrumble(ref(crumbleFlavour.value));
     }
-    toppingFlavourSelected = toppingFlavour.value;
+    console.log(toppingFlavour + ' is the topping flavour')
+    toppingFlavourSelected = toppingFlavour;
 }
 
 const createOrder = () => {
@@ -84,7 +90,7 @@ const createOrder = () => {
         <label for="flavours">Choose your flavour</label>
         <select name="flavours" class="__input" v-model="icing" @click="updateIcing()">
             <option disabled value=null>Please select a flavour</option>
-            <option v-for="flavour in flavour.glaze" :value="flavour.color">{{ flavour.taste }}</option>
+            <option v-for="(flavour, index) in flavour.glaze" :value="index">{{ flavour.taste }}</option>
         </select>
 
         <label for="filling">Fill me up baby</label>

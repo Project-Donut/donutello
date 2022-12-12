@@ -62,7 +62,7 @@ export default class ThreeScene {
     }
 
     loadIcing(flavour) {
-        this.icing.material.color.setHex(flavour.value);
+        this.icing.material.color.setHex(flavour);
     }
     loadFilling(flavour) {
         this.filling.material.color.setHex(flavour.value);
