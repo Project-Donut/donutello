@@ -13,7 +13,7 @@ let icing = ref(null);
 let topping = ref(0);
 let toppingFlavour = ref(null);
 let crumbleFlavour = ref(null);
-let filling = ref('0xffffff');
+let filling = ref(null);
 let fillingFlavour = ref(null);
 let toppingSelected = ref(null);
 let toppingFlavourSelected = ref(null);
@@ -21,19 +21,18 @@ const updateIcing = () => {
     if (icing.value !== null) {
         props.model.loadIcing(flavour.value.glaze[icing.value].color);
         icingFlavour = flavour.value.glaze[icing.value].taste;
-    }
-    
-    
-    
+    }  
 }
 const updateFilling = () => {
-    if (filling.value && filling.value !== '0x000000') {
-        props.model.loadFilling(ref(filling.value));
+    if (filling.value !== null && filling.value !== 4) {
+        props.model.loadFilling(flavour.value.filling[filling.value].color);
+        fillingFlavour = flavour.value.filling[filling.value].taste;
         props.model.filling.visible = true;
     } else {
         props.model.filling.visible = false;
+        fillingFlavour = 'none';
     }
-    console.log(filling + ' is the filling flavour')
+   
     fillingFlavour = filling.value;
 }
 const selectTopping = () => {
@@ -61,11 +60,11 @@ const updateTopping = () => {
     if (toppingFlavour.value && topping.value != 2) {
         console.log(toppingFlavour.value);
 
-        props.model.loadTopping(ref(toppingFlavour.value));
+        props.model.loadTopping(flavour.value.sprinkles[toppingFlavour.value].color);
     } else if (crumbleFlavour.value) {
         console.log(crumbleFlavour.value);
 
-        props.model.loadCrumble(ref(crumbleFlavour.value));
+        props.model.loadCrumble(flavour.value.crumble[toppingFlavour.value].color);
     }
     console.log(toppingFlavour + ' is the topping flavour')
     toppingFlavourSelected = toppingFlavour;
@@ -96,7 +95,7 @@ const createOrder = () => {
         <label for="filling">Fill me up baby</label>
         <select name="filling" class="__input __input-filling" v-model="filling" @click="updateFilling()">
             <option disabled value=null>Please select a flavour</option>
-            <option v-for="flavour in flavour.filling" :value="flavour.color">{{ flavour.taste }}</option>
+            <option v-for="(flavour,index) in flavour.filling" :value="index">{{ flavour.taste }}</option>
         </select>
 
         <label for="topping">Selecteer een topping!</label>
@@ -113,7 +112,7 @@ const createOrder = () => {
                 <select name="toppingFlavour" class="__input __input-topping_flavour" v-model="toppingFlavour"
                     @click="updateTopping()">
                     <option disabled value=null>Please select a flavour</option>
-                    <option v-for="flavour in flavour.sprinkles" :value="flavour.color">{{ flavour.name }}</option>
+                    <option v-for="(flavour, index) in flavour.sprinkles" :value="index">{{ flavour.name }}</option>
                 </select>
             </div>
         
@@ -123,7 +122,7 @@ const createOrder = () => {
                 <select name="crumbleFlavour" class="__input __input-crumble_flavour" v-model="crumbleFlavour"
                     @click="updateTopping()">
                     <option disabled value=null>Please select a flavour</option>
-                    <option v-for="flavour in flavour.crumble" :value="flavour.color">{{ flavour.name }}</option>
+                    <option v-for="(flavour, index) in flavour.crumble" :value="index">{{ flavour.name }}</option>
                 </select>
             </div>
         
