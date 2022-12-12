@@ -66,6 +66,10 @@
         {
             "taste": "Willekeurig",
             "color": "0xef9baa"
+        },
+        {
+            "taste": "Geen",
+            "color": "0x000000"
         }
     ]
   }

@@ -79,10 +79,10 @@ const createOrder = () =>{
             <option value=3>Geen topping</option>
         </select>
 
-        <label for="balls">Balls?</label>
-        <select name="balls" class="__input __input-balls">
-            <option value="blue">Blue balls</option>
-            <option value="none">No balls?</option>
+        <label for="toppingFlavour">Welke topping smaak?</label>
+        <select name="toppingFlavour" class="__input __input-topping_flavour">
+            <option disabled value=null>Please select a flavour</option>
+            <option v-for="flavour in flavour.topping" :value="flavour.color">{{flavour.taste}}</option>
         </select>
      
 
