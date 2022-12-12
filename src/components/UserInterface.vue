@@ -1,8 +1,12 @@
 <script setup>
 //import vue
-import {ref, render, reactive, defineProps} from 'vue';
+import {ref, onMounted, reactive, defineProps} from 'vue';
+import recipe from '../assets/flavours.json';
 //create reactive state to send to api
 let state = reactive({order: []});
+//import json from assets
+const flavour = ref(recipe);
+
 const props = defineProps(['model']);
 let icingFlavour = ref(null);
 let icing = ref(null);
@@ -29,6 +33,9 @@ const createOrder = () =>{
         
 }
     
+ onMounted(() => {
+    console.log(flavour.value.glaze[2]);
+    })
  
 
 </script>
@@ -40,18 +47,13 @@ const createOrder = () =>{
         <label for="flavours">Choose your flavour</label>
         <select name="flavours" class="__input" v-model="icing" @click="updateIcing()">
             <option disabled value=null>Please select a flavour</option>
-            <option value="0xc71639" >strawberry</option>
-            <option value="0x803721">choccy</option>
-            <option value="0xedc568">vanilla</option>   
+            <option v-for="flavour in flavour.glaze" :value="flavour.color">{{flavour.taste}}</option> 
         </select>
 
         <label for="filling">Fill me up baby</label>
         <select name="filling" class="__input __input-filling" v-model="filling" @click="updateFilling()">
-            <option disabled value=null>Please select a filling</option>
-            <option value="0x803721">filling1</option>
-            <option value="0xedc568">filling2</option>
-            <option value="0xc71639">filling3</option>
-            <option value="0x000000">No filling</option>
+            <option disabled value=null>Please select a flavour</option>
+            <option v-for="flavour in flavour.filling" :value="flavour.color">{{flavour.taste}}</option>
         </select>
 
         <label for="sprinkles">You want sprinkies?</label>

@@ -1,0 +1,71 @@
+{
+    "glaze": [
+        {
+        "taste": "Aardbei",
+        "color": "0xc71639"
+        },
+      {
+        "taste": "Chocolade",
+        "color": "0x592720"
+      },
+      {
+        "taste": "Snickers",
+        "color": "0x07748"
+      },
+      {
+        "taste": "Oreo",
+        "color": "0xdee0e0"
+      },
+      {
+        "taste": "Limoen",
+        "color": "0xafc7b4"
+      },
+      {
+        "taste": "Kokos",
+        "color": "0xedf2f3"
+      },
+      {
+        "taste": "Kersen",
+        "color": "0xee6fb1"
+      },
+      {
+        "taste": "Pistache",
+        "color": "0x9cbe80"
+      }
+    ],
+    "sprinkles": [
+      {
+        "name": "Roze",
+        "colour": "0xef9baa"
+        
+      }, 
+      {
+        "name": "Wit",
+        "colour": "0xf8f6f0"
+        
+      }, 
+      {
+        "name": "Bruin",
+        "colour": "0x7e4e1d"
+
+      }
+    ],
+    "filling":[
+        {
+            "taste": "Pudding",
+            "color": "0xffe683"
+        },
+        {
+            "taste": "Rijstpap",
+            "color": "0xffcc66"
+        },
+        {
+            "taste": "Nutella",
+            "color": "0x592720"
+        },
+        {
+            "taste": "Willekeurig",
+            "color": "0xef9baa"
+        }
+    ]
+  }
