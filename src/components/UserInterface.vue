@@ -83,7 +83,6 @@ const onUpload = e => {
 
 <template>
     <div class="userInput">
-        <input class="__input" type="text" placeholder="Name your nutty boy">
         <div class="__input--group">
             <label for="flavours">Welke glazuur wil je?</label>
             <DropDown :modelValue="flavour.glaze[selectedIcing]" :options="flavour.glaze" @change="onChangeIcing">
@@ -101,8 +100,6 @@ const onUpload = e => {
                     </div>
                 </template>
             </DropDown>
-        </div>
-        <div class="__input--group">
             <label for="filling">Wat zit er in verstopt?</label>
             <DropDown :modelValue="flavour.filling[selectedFilling]" :options="flavour.filling"
                 @change="onChangeFilling">
@@ -120,63 +117,72 @@ const onUpload = e => {
                     </div>
                 </template>
             </DropDown>
-        </div>
-        <div class="__input--group">
             <label for="topping">Strooi er wat over!</label>
             <DropDown :modelValue="flavour.toppings[selectedToppingType]" :options="flavour.toppings"
                 @change="onChangeToppingType">
                 <template #value="option">{{ option?.value.name }}</template>
                 <template #option="{ option }">{{ option?.name }}</template>
             </DropDown>
+            <template v-if="selectedToppingType === 1 || selectedToppingType === 2">
+                <label for="toppingFlavour">Welke topping kleur?</label>
+                <DropDown :modelValue="flavour.sprinkles[selectedSprinkleFlavor]" :options="flavour.sprinkles"
+                    @change="onChangeToppingFlavor">
+                    <template #value="slot">
+                        <div class="option" v-if="slot.value">
+                            <div class="option__color"
+                                :style="{ backgroundColor: slot.value?.color.replace('0x', '#') }">
+                            </div>
+                            <div>{{ slot.value?.name }}</div>
+                        </div>
+                    </template>
+                    <template #option="{ option }">
+                        <div class="option">
+                            <div class="option__color" :style="{ backgroundColor: option?.color.replace('0x', '#') }">
+                            </div>
+                            <div>{{ option.name }}</div>
+                        </div>
+                    </template>
+                </DropDown>
+            </template>
+            <template v-if="selectedToppingType === 3">
+                <label for="toppingFlavour">Welke crumble smaak?</label>
+                <DropDown :modelValue="flavour.crumble[selectedCrumbleFlavor]" :options="flavour.crumble"
+                    @change="onChangeToppingFlavor">
+                    <template #value="slot">
+                        <div class="option" v-if="slot.value">
+                            <div class="option__color"
+                                :style="{ backgroundColor: slot.value?.color.replace('0x', '#') }">
+                            </div>
+                            <div>{{ slot.value?.name }}</div>
+                        </div>
+                    </template>
+                    <template #option="{ option }">
+                        <div class="option">
+                            <div class="option__color" :style="{ backgroundColor: option?.color.replace('0x', '#') }">
+                            </div>
+                            <div>{{ option.name }}</div>
+                        </div>
+                    </template>
+                </DropDown>
+            </template>
         </div>
-        <template v-if="selectedToppingType === 1 || selectedToppingType === 2">
-            <label for="toppingFlavour">Welke topping kleur?</label>
-            <DropDown :modelValue="flavour.sprinkles[selectedSprinkleFlavor]" :options="flavour.sprinkles"
-                @change="onChangeToppingFlavor">
-                <template #value="slot">
-                    <div class="option" v-if="slot.value">
-                        <div class="option__color" :style="{ backgroundColor: slot.value?.color.replace('0x', '#') }">
-                        </div>
-                        <div>{{ slot.value?.name }}</div>
-                    </div>
-                </template>
-                <template #option="{ option }">
-                    <div class="option">
-                        <div class="option__color" :style="{ backgroundColor: option?.color.replace('0x', '#') }"></div>
-                        <div>{{ option.name }}</div>
-                    </div>
-                </template>
-            </DropDown>
-        </template>
-        <template v-if="selectedToppingType === 3">
-            <label for="toppingFlavour">Welke crumble smaak?</label>
-            <DropDown :modelValue="flavour.crumble[selectedCrumbleFlavor]" :options="flavour.crumble"
-                @change="onChangeToppingFlavor">
-                <template #value="slot">
-                    <div class="option" v-if="slot.value">
-                        <div class="option__color" :style="{ backgroundColor: slot.value?.color.replace('0x', '#') }">
-                        </div>
-                        <div>{{ slot.value?.name }}</div>
-                    </div>
-                </template>
-                <template #option="{ option }">
-                    <div class="option">
-                        <div class="option__color" :style="{ backgroundColor: option?.color.replace('0x', '#') }"></div>
-                        <div>{{ option.name }}</div>
-                    </div>
-                </template>
-            </DropDown>
-        </template>
         <div class="imageUpload">
             <label for="imageUpload">Upload een cool label 😎</label>
             <FileUpload mode="basic" accept="image/*" :maxFileSize="500000" :customUpload="true" @uploader="onUpload"
                 :auto="true" chooseLabel="Upload Afbeelding" />
         </div>
-        <UserDetails :donutDetails="donutDetails"/>
+        
+        <UserDetails :donutDetails="donutDetails" />
     </div>
 </template>
 
 <style scoped>
+label {
+    font-size: 1em;
+    margin-bottom: 0.25em;
+    margin-top: 0.75em;
+    display: block;
+}
 .userInput {
     background-color: aliceblue;
     width: 100%;
@@ -199,23 +205,16 @@ const onUpload = e => {
     flex-direction: column;
 }
 
-.topping {
-    display: 1;
-}
-
-.crumble {
-    display: none;
-}
-
 .option {
     display: flex;
+    line-height: 140%;
 }
 
 .option .option__color {
     width: 1.5em;
     height: 1.5em;
+    border: 2px solid rgba(33, 37, 41, 0.25);
     border-radius: 50%;
     margin-right: 10px;
-    background-color: gray;
 }
 </style>

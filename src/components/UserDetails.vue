@@ -73,8 +73,6 @@ onMounted(() => {
 </script>
 
 <template>
-
-
     <Button label="Ga naar bestellen" icon="pi pi-chevron-right" @click="openModal" />
     <Dialog header="Header" v-model:visible="displayModal" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
         :style="{ width: '50vw' }" :modal="true">
@@ -158,7 +156,6 @@ onMounted(() => {
             <Button label="Bestel" icon="pi pi-check" @click="placeOrder" autofocus />
         </template>
     </Dialog>
-
 </template>
 
 
@@ -174,17 +171,17 @@ onMounted(() => {
     display: flex;
     flex-direction: row;
 
-    margin: 1rem;
+    margin: 1em;
 }
 
 .__inputText {
     display: block;
-    margin-left: 1rem;
+    margin-left: 1em;
 }
 
 .p-button {
-    margin: 0.3rem .5rem;
-    min-width: 10rem;
+    margin: 0.5em 0;
+    min-width: 10em;
 }
 
 p {
@@ -198,7 +195,7 @@ p {
 }
 
 .p-dialog .p-button {
-    min-width: 6rem;
+    min-width: 6em;
 }
 
 .p-dialog-content {
