@@ -33,8 +33,6 @@ const updateFilling = () => {
         props.model.filling.visible = false;
         fillingFlavour = 'none';
     }
-
-
 }
 const selectTopping = () => {
     const toppingsAll = [props.model.sprinkles, props.model.flakes, props.model.crumble];
@@ -68,19 +66,23 @@ const updateTopping = () => {
         props.model.loadCrumble(flavour.value.crumble[crumbleFlavour.value].color);
         toppingFlavourSelected = flavour.value.crumble[crumbleFlavour.value].name;
     }
-
-
 }
 
 const createOrder = () => {
-
     state.order.push(icingFlavour, fillingFlavour, toppingSelected, toppingFlavourSelected);
     console.log(state.order);
-
 }
 
-
-
+const onUpload = e => {
+    const file = e.files[0];
+    // file to base64
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+        console.log(reader.result);
+        
+    };
+}
 
 </script>
 
@@ -125,8 +127,8 @@ const createOrder = () => {
         </div>
         <div class="imageUpload">
             <label for="imageUpload">Upload een cool label 😎</label>
-            <FileUpload mode="basic" accept="image/*" :maxFileSize="500000" @upload="onUpload" :auto="true"
-                chooseLabel="Browse" />
+            <FileUpload mode="basic" accept="image/*" :maxFileSize="500000" :customUpload="true" @uploader="onUpload" :auto="true"
+                chooseLabel="Upload Afbeelding" />
         </div>
 
         <UserDetails />
