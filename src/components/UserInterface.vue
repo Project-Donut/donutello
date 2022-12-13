@@ -105,7 +105,6 @@ const createOrder = () => {
             <option v-for="(flavour, index) in flavour.toppings" :value="index">{{ flavour.name }}</option>
         </select>
 
-        
             <div class="topping">
                 <label for="toppingFlavour">Welke topping kleur?</label>
                 <select name="toppingFlavour" class="__input __input-topping_flavour" v-model="toppingFlavour"
@@ -115,7 +114,6 @@ const createOrder = () => {
                 </select>
             </div>
         
-        
             <div class="crumble">
                 <label for="crumbleFlavour">Welke crumble smaak?</label>
                 <select name="crumbleFlavour" class="__input __input-crumble_flavour" v-model="crumbleFlavour"
@@ -124,10 +122,10 @@ const createOrder = () => {
                     <option v-for="(flavour, index) in flavour.crumble" :value="index">{{ flavour.name }}</option>
                 </select>
             </div>
-        
-
-
-
+            <div class="imageUpload">
+                <label for="imageUpload">Upload een cool label 😎</label>
+                <FileUpload mode="basic" accept="image/*" :maxFileSize="500000" @upload="onUpload" :auto="true" chooseLabel="Browse" />
+            </div>
         <button class="__input" href="#" @click="createOrder()">Save this Nutty man</button>
     </div>
 
