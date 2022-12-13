@@ -1,19 +1,21 @@
 <script setup>
 import { ref, onMounted, reactive, defineProps } from 'vue';
-
+const props = defineProps(['donutDetails']);
 const displayModal = ref(false);
 const openModal = () => {
             displayModal.value = true;
+            console.log(props.donutDetails);
         };
         const closeModal = () => {
             displayModal.value = false;
         }
+        
 </script>
 
 <template>
 
-<h5>Modal</h5>
-        <Button label="Show" icon="pi pi-external-link" @click="openModal" />
+
+        <Button label="Ga naar bestellen 👉"  @click="openModal" />
         <Dialog header="Header" v-model:visible="displayModal" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}" :modal="true">
             <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
                 laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.

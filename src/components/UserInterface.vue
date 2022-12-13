@@ -4,7 +4,7 @@ import { ref, onMounted, reactive, defineProps } from 'vue';
 import UserDetails from './UserDetails.vue';
 import recipe from '../assets/flavours.json';
 //create reactive state to send to api
-let state = reactive({ order: [] });
+
 //import json from assets
 const flavour = ref(recipe);
 
@@ -32,6 +32,8 @@ const onChangeFilling = (e) => {
     } else {
         props.model.filling.visible = false;
     }
+    state.order[1] = fillingFlavour;
+    
 }
 
 const onChangeToppingType = e => {
@@ -43,6 +45,7 @@ const onChangeToppingType = e => {
     if (flavour.value.toppings[selectedToppingType.value].name !== 'Geen') {
         toppingsAll[selectedToppingType.value - 1].visible = true;
     }
+    state.order[2] = toppingSelected;
 }
 
 const onChangeToppingFlavor = e => {
@@ -57,6 +60,8 @@ const onChangeToppingFlavor = e => {
         selectedCrumbleFlavor.value = flavour.value.crumble.findIndex(taste => taste.name === e.value.name);
         props.model.loadCrumble(flavour.value.crumble[selectedCrumbleFlavor.value].color);
     }
+    state.order[3] = toppingFlavourSelected;
+    
 }
 
 const createOrder = () => {
@@ -167,7 +172,7 @@ const onUpload = e => {
                 :auto="true" chooseLabel="Upload Afbeelding" />
         </div>
 
-        <UserDetails />
+        <UserDetails :donutDetails="state"/>
         <button class="__input" href="#" @click="createOrder()">Save this Nutty man</button>
     </div>
 </template>
