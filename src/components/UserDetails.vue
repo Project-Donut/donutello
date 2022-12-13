@@ -105,8 +105,6 @@ onMounted(() => {
 </script>
 
 <template>
-
-
     <Button label="Ga naar bestellen" icon="pi pi-chevron-right" @click="openModal" />
     <Dialog header="Bestelling" v-model:visible="displayModal" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
         :style="{ width: '50vw', background: '#e72c70' }" :modal="true">
@@ -236,7 +234,6 @@ onMounted(() => {
 
     margin: 1rem;
 }
-
 @media screen and (max-width: 600px) {
     .__inputGroup {
         flex-direction: column;
@@ -244,10 +241,9 @@ onMounted(() => {
 }
 
 
-
 .__inputText {
     display: block;
-    margin-left: 1rem;
+    margin-left: 1em;
 }
 
 .__inputText-slider {
@@ -255,8 +251,8 @@ onMounted(() => {
 }
 
 .p-button {
-    margin: 0.3rem .5rem;
-    min-width: 10rem;
+    margin: 0.5em 0;
+    min-width: 10em;
 }
 
 p {
@@ -270,7 +266,7 @@ p {
 }
 
 .p-dialog .p-button {
-    min-width: 6rem;
+    min-width: 6em;
 }
 
 .p-calendar {
@@ -281,7 +277,24 @@ p {
     display: flex;
     justify-content: center;
 }
+
+.p-button {
+    margin: 0;
+    position: absolute;
+    bottom: 1em;
+}
+
+@media screen and (max-width: 600px) {
+    .__inputGroup {
+        flex-direction: column;
+    }
+
+    .p-button {
+        right: 1em;
+    }
+}
 </style>
+
 <style>
 .p-dialog .p-dialog-header {
     background: #1d76c3;
