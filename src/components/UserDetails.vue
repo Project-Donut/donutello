@@ -202,4 +202,10 @@ p {
     display: flex;
     justify-content: center;
 }
+
+.p-button {
+    margin: 0;
+    position: absolute;
+    bottom: 1em;
+}
 </style>

@@ -52,11 +52,13 @@ onMounted(() => {
 .__header {
     grid-area: header;
     border-bottom: 1px solid var(--surface-400);
+    padding: .25em;
 }
 
 .__userInterface {
     grid-area: ui;
-    overflow-y: scroll;
+    overflow-y: auto;
+    background-color: var(--surface-100);
 
     border-right: 1px solid var(--surface-400);
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);

@@ -165,13 +165,13 @@ const onUpload = e => {
                     </template>
                 </DropDown>
             </template>
+            <div class="imageUpload">
+                <label for="imageUpload">Upload een cool label 😎</label>
+                <FileUpload mode="basic" class="p-button-outlined" accept="image/*" :maxFileSize="500000"
+                    :customUpload="true" @uploader="onUpload" :auto="true" chooseLabel="Upload Afbeelding" />
+            </div>
         </div>
-        <div class="imageUpload">
-            <label for="imageUpload">Upload een cool label 😎</label>
-            <FileUpload mode="basic"  class="p-button-outlined"  accept="image/*" :maxFileSize="500000" :customUpload="true" @uploader="onUpload"
-                :auto="true" chooseLabel="Upload Afbeelding" />
-        </div>
-        
+
         <UserDetails :donutDetails="donutDetails" />
     </div>
 </template>
@@ -183,9 +183,11 @@ label {
     margin-top: 0.75em;
     display: block;
 }
+
 .userInput {
     width: 100%;
-    padding: 1em .5em 1em 1em;
+    height: 100%;
+    padding: 1em;
 }
 
 .__input {
@@ -202,6 +204,7 @@ label {
 .__input--group {
     display: flex;
     flex-direction: column;
+    padding-bottom: 8em;
 }
 
 .option {
