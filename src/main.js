@@ -12,7 +12,6 @@ import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import InputSwitch from 'primevue/inputswitch';
 import DropDown from 'primevue/dropdown';
-import InputText from 'primevue/inputtext';
 
 const app = createApp(App)
 app.use(PrimeVue);
