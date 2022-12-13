@@ -48,6 +48,7 @@ const placeOrder = async() => {
     let customerDoc = {
         fullName,
         email: customer.mail,
+        company: customer.bedrijf,
         phone: customer.tel,
         billingAddress,
     };
