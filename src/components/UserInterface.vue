@@ -36,12 +36,12 @@ const onChangeFilling = (e) => {
 
 const onChangeToppingType = e => {
     selectedToppingType.value = flavour.value.toppings.findIndex(topping => topping.name === e.value.name);
-    
+
     const toppingsAll = [props.model.sprinkles, props.model.flakes, props.model.crumble];
     toppingsAll.forEach(topping => { topping.visible = false; });
-    
+
     if (flavour.value.toppings[selectedToppingType.value].name !== 'Geen') {
-        toppingsAll[selectedToppingType.value-1].visible = true;
+        toppingsAll[selectedToppingType.value - 1].visible = true;
     }
 }
 
@@ -52,7 +52,7 @@ const onChangeToppingFlavor = e => {
     if (toppingType === 'Sprinkles' || toppingType === 'Flakes') {
         selectedSprinkleFlavor.value = flavour.value.sprinkles.findIndex(taste => taste.name === e.value.name);
         props.model.loadTopping(flavour.value.sprinkles[selectedSprinkleFlavor.value].color);
-    } 
+    }
     else if (toppingType === 'Crumble') {
         selectedCrumbleFlavor.value = flavour.value.crumble.findIndex(taste => taste.name === e.value.name);
         props.model.loadCrumble(flavour.value.crumble[selectedCrumbleFlavor.value].color);
@@ -65,7 +65,6 @@ const createOrder = () => {
 
 const onUpload = e => {
     const file = e.files[0];
-    // file to base64
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
@@ -84,7 +83,8 @@ const onUpload = e => {
             <DropDown :modelValue="flavour.glaze[selectedIcing]" :options="flavour.glaze" @change="onChangeIcing">
                 <template #value="slot">
                     <div class="option" v-if="slot.value">
-                        <div class="option__color" :style="{ backgroundColor: slot.value?.color.replace('0x', '#') }"></div>
+                        <div class="option__color" :style="{ backgroundColor: slot.value?.color.replace('0x', '#') }">
+                        </div>
                         <div>{{ slot.value?.taste }}</div>
                     </div>
                 </template>
@@ -98,10 +98,12 @@ const onUpload = e => {
         </div>
         <div class="__input--group">
             <label for="filling">Wat zit er in verstopt?</label>
-            <DropDown :modelValue="flavour.filling[selectedFilling]" :options="flavour.filling" @change="onChangeFilling">
+            <DropDown :modelValue="flavour.filling[selectedFilling]" :options="flavour.filling"
+                @change="onChangeFilling">
                 <template #value="slot">
                     <div class="option" v-if="slot.value">
-                        <div class="option__color" :style="{ backgroundColor: slot.value?.color.replace('0x', '#') }"></div>
+                        <div class="option__color" :style="{ backgroundColor: slot.value?.color.replace('0x', '#') }">
+                        </div>
                         <div>{{ slot.value?.taste }}</div>
                     </div>
                 </template>
@@ -115,18 +117,20 @@ const onUpload = e => {
         </div>
         <div class="__input--group">
             <label for="topping">Strooi er wat over!</label>
-            <DropDown :modelValue="flavour.toppings[selectedToppingType]" :options="flavour.toppings" @change="onChangeToppingType">
-                <template #value="option">{{option?.value.name}}</template>
+            <DropDown :modelValue="flavour.toppings[selectedToppingType]" :options="flavour.toppings"
+                @change="onChangeToppingType">
+                <template #value="option">{{ option?.value.name }}</template>
                 <template #option="{ option }">{{ option?.name }}</template>
             </DropDown>
         </div>
         <template v-if="selectedToppingType === 1 || selectedToppingType === 2">
             <label for="toppingFlavour">Welke topping kleur?</label>
-            <DropDown :modelValue="flavour.sprinkles[selectedSprinkleFlavor]" :options="flavour.sprinkles" 
+            <DropDown :modelValue="flavour.sprinkles[selectedSprinkleFlavor]" :options="flavour.sprinkles"
                 @change="onChangeToppingFlavor">
                 <template #value="slot">
                     <div class="option" v-if="slot.value">
-                        <div class="option__color" :style="{ backgroundColor: slot.value?.color.replace('0x', '#') }"></div>
+                        <div class="option__color" :style="{ backgroundColor: slot.value?.color.replace('0x', '#') }">
+                        </div>
                         <div>{{ slot.value?.name }}</div>
                     </div>
                 </template>
@@ -140,11 +144,12 @@ const onUpload = e => {
         </template>
         <template v-if="selectedToppingType === 3">
             <label for="toppingFlavour">Welke crumble smaak?</label>
-            <DropDown :modelValue="flavour.crumble[selectedCrumbleFlavor]" :options="flavour.crumble" 
+            <DropDown :modelValue="flavour.crumble[selectedCrumbleFlavor]" :options="flavour.crumble"
                 @change="onChangeToppingFlavor">
                 <template #value="slot">
                     <div class="option" v-if="slot.value">
-                        <div class="option__color" :style="{ backgroundColor: slot.value?.color.replace('0x', '#') }"></div>
+                        <div class="option__color" :style="{ backgroundColor: slot.value?.color.replace('0x', '#') }">
+                        </div>
                         <div>{{ slot.value?.name }}</div>
                     </div>
                 </template>
@@ -156,7 +161,6 @@ const onUpload = e => {
                 </template>
             </DropDown>
         </template>
-
         <div class="imageUpload">
             <label for="imageUpload">Upload een cool label 😎</label>
             <FileUpload mode="basic" accept="image/*" :maxFileSize="500000" :customUpload="true" @uploader="onUpload"
@@ -166,8 +170,6 @@ const onUpload = e => {
         <UserDetails />
         <button class="__input" href="#" @click="createOrder()">Save this Nutty man</button>
     </div>
-
-
 </template>
 
 <style scoped>
