@@ -264,9 +264,7 @@ p {
     }
 
     .p-button {
-        margin: 0;
-        position: inherit;
-        bottom: 1em;
+        right: 1em;
     }
 }
 </style>
