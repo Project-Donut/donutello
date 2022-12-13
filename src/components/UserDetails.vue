@@ -74,7 +74,6 @@ const placeOrder = async() => {
         fillingFlavour: props.donutDetails.filling,
         logoImage: props.donutDetails.image,
     }
-    console.log(donutDoc);
     let donutResult = await postDonut(donutDoc);
     if(donutResult.status !== 'success') return;
     let donutId = donutResult.data._id;
@@ -85,13 +84,7 @@ const placeOrder = async() => {
         count: customer.count,
         dateBy: customer.date
     });
-    console.log(result);
-    // let order = {
-    //     customer,
-    //     shippingAddress,
-    //     count: 0,
-    //     dateBy: (new Date()).toLocaleString()
-    // }
+    
 
 }
 onMounted(() => {
