@@ -1,5 +1,7 @@
 <script setup>
 import { ref, onMounted, reactive, defineProps } from 'vue';
+import { postOrder } from '../api/order.js';
+import { postCustomer } from '../api/customer.js';
 const props = defineProps(['donutDetails']);
 const displayModal = ref(false);
 const openModal = () => {
@@ -32,12 +34,38 @@ const setFactuurAdres = () => {
         customer.factuurLever2 = '';
     }
 }
-const printCustomer = () => {
-    if(checked.value){
+const placeOrder = async() => {
+    if (checked.value) {
         customer.factuurLever1 = customer.adresLever1;
         customer.factuurLever2 = customer.adresLever2;
     }
-    console.log(customer);
+    let fullname = customer.voornaam + ' ' + customer.achternaam;
+    let billingAddress = customer.factuurLever1 + ' ' + customer.factuurLever2;
+    let shippingAddress = customer.adresLever1 + ' ' + customer.adresLever2;
+    let customerDoc = {
+        name: fullname,
+        email: customer.mail,
+        phone: customer.tel,
+        billingAddress: billingAddress,
+    };
+    console.log(customerDoc);
+    let result = await postCustomer(customerDoc);
+    if(result.status !== 'success') return;
+    let customerId = result.data._id;
+    result = await postOrder({
+        customer: customerId,
+        shippingAddress,
+        count: 0,
+        dateBy: (new Date()).toLocaleString()
+    });
+    console.log(result);
+    // let order = {
+    //     customer,
+    //     shippingAddress,
+    //     count: 0,
+    //     dateBy: (new Date()).toLocaleString()
+    // }
+
 }
 onMounted(() => {
     setFactuurAdres();
@@ -105,10 +133,10 @@ onMounted(() => {
                 </div>
             </div>
             <h5>Zelfde als lever adres</h5>
-                    <InputSwitch v-model="checked" @change="setFactuurAdres" />
-                    
+            <InputSwitch v-model="checked" @change="setFactuurAdres" />
+
             <div class="__inputGroup" v-if="!checked">
-               
+
                 <div class="__inputText">
                     <h5>Factuur adres 1</h5>
                     <span class="p-float-label">
@@ -127,7 +155,7 @@ onMounted(() => {
         </div>
         <template #footer>
             <Button label="Cancel" icon="pi pi-times" @click="closeModal" class="p-button-text" />
-            <Button label="Bestel" icon="pi pi-check" @click="printCustomer" autofocus />
+            <Button label="Bestel" icon="pi pi-check" @click="placeOrder" autofocus />
         </template>
     </Dialog>
 
