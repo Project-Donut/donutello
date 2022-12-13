@@ -64,11 +64,11 @@
     "crumble": [
         {
             "name": "Oreo",
-            "color": "0xdee0e0"
+            "color": "0x242220"
         },
         {
             "name": "Snickers",
-            "color": "0xbc6138"
+            "color": "0x573223"
         },
         {
             "name": "Kokos",
@@ -76,7 +76,7 @@
         },
         {
             "name": "Pistache",
-            "color": "0x9cbe80"
+            "color": "0x3f7536"
         }
     ],
     "filling": [
