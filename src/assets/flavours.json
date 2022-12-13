@@ -1,10 +1,6 @@
 {
     "glaze": [
         {
-            "taste": "Geen",
-            "color": "0x00000000"
-        },
-        {
             "taste": "Aardbei",
             "color": "0xc71639"
         },
