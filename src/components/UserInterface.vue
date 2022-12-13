@@ -1,9 +1,8 @@
 <script setup>
 //import vue
-import { ref, onMounted, reactive, defineProps } from 'vue';
+import { ref, reactive, defineProps } from 'vue';
 import UserDetails from './UserDetails.vue';
 import recipe from '../assets/flavours.json';
-//create reactive state to send to api
 
 //import json from assets
 const flavour = ref(recipe);
@@ -14,11 +13,19 @@ let selectedFilling = ref(3);
 let selectedToppingType = ref(1);
 let selectedSprinkleFlavor = ref(0);
 let selectedCrumbleFlavor = ref(0);
-
 let labelImage = ref("");
+
+const donutDetails = reactive({
+    icing: flavour.value.glaze[selectedIcing.value].taste,
+    filling: flavour.value.filling[selectedFilling.value].taste,
+    topping: flavour.value.toppings[selectedToppingType.value].name,
+    toppingFlavor: flavour.value.sprinkles[selectedSprinkleFlavor.value].name,
+    image: '',
+})
 
 const onChangeIcing = (e) => {
     selectedIcing.value = flavour.value.glaze.findIndex(icing => icing.taste === e.value.taste);
+    donutDetails.icing = flavour.value.glaze[selectedIcing.value].taste;
     if (selectedIcing.value !== null) {
         props.model.loadIcing(flavour.value.glaze[selectedIcing.value].color);
     }
@@ -26,26 +33,24 @@ const onChangeIcing = (e) => {
 
 const onChangeFilling = (e) => {
     selectedFilling.value = flavour.value.filling.findIndex(fill => fill.taste === e.value.taste);
+    donutDetails.filling = flavour.value.filling[selectedFilling.value].taste;
     if (flavour.value.filling[selectedFilling.value].taste !== 'Geen') {
         props.model.loadFilling(flavour.value.filling[selectedFilling.value].color);
         props.model.filling.visible = true;
     } else {
         props.model.filling.visible = false;
     }
-    state.order[1] = fillingFlavour;
-    
 }
 
 const onChangeToppingType = e => {
     selectedToppingType.value = flavour.value.toppings.findIndex(topping => topping.name === e.value.name);
-
+    donutDetails.topping = flavour.value.toppings[selectedToppingType.value].name;
     const toppingsAll = [props.model.sprinkles, props.model.flakes, props.model.crumble];
     toppingsAll.forEach(topping => { topping.visible = false; });
 
     if (flavour.value.toppings[selectedToppingType.value].name !== 'Geen') {
         toppingsAll[selectedToppingType.value - 1].visible = true;
     }
-    state.order[2] = toppingSelected;
 }
 
 const onChangeToppingFlavor = e => {
@@ -54,18 +59,14 @@ const onChangeToppingFlavor = e => {
 
     if (toppingType === 'Sprinkles' || toppingType === 'Flakes') {
         selectedSprinkleFlavor.value = flavour.value.sprinkles.findIndex(taste => taste.name === e.value.name);
+        donutDetails.toppingFlavor = flavour.value.sprinkles[selectedSprinkleFlavor.value].name;
         props.model.loadTopping(flavour.value.sprinkles[selectedSprinkleFlavor.value].color);
     }
     else if (toppingType === 'Crumble') {
         selectedCrumbleFlavor.value = flavour.value.crumble.findIndex(taste => taste.name === e.value.name);
+        donutDetails.toppingFlavor = flavour.value.crumble[selectedCrumbleFlavor.value].name;
         props.model.loadCrumble(flavour.value.crumble[selectedCrumbleFlavor.value].color);
     }
-    state.order[3] = toppingFlavourSelected;
-    
-}
-
-const createOrder = () => {
-    //state.order.push(weirdIcing, weirdFillingFlavor, weirdTopping, weirdToppingFlavor);
 }
 
 const onUpload = e => {
@@ -73,7 +74,7 @@ const onUpload = e => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-        labelImage.value = reader.result;
+        donutDetails.image = reader.result;
         props.model.loadImage(reader.result);
     };
 }
@@ -171,9 +172,7 @@ const onUpload = e => {
             <FileUpload mode="basic" accept="image/*" :maxFileSize="500000" :customUpload="true" @uploader="onUpload"
                 :auto="true" chooseLabel="Upload Afbeelding" />
         </div>
-
-        <UserDetails :donutDetails="state"/>
-        <button class="__input" href="#" @click="createOrder()">Save this Nutty man</button>
+        <UserDetails :donutDetails="donutDetails"/>
     </div>
 </template>
 
