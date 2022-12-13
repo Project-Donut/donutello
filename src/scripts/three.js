@@ -2,6 +2,7 @@ import * as THREE from "three";
 //import orbit controls
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { createDonut, createLights } from "../js/threeMeshes";
+const textureLoader = new THREE.TextureLoader();
 
 export default class ThreeScene {
     constructor(viewPort) {
@@ -10,6 +11,7 @@ export default class ThreeScene {
         this.camera;
         this.renderer;
         this.isLoaded = false;
+        this.labelMaterial;
     }
 
     sceneSetup() {
@@ -36,14 +38,15 @@ export default class ThreeScene {
     /**
      * @param {THREE.} gltf
      */
-    loadDonut(gltf) {
-        createDonut((donut, filling, icing, sprinkles, crumble, flakes) => {
+    loadDonut() {
+        createDonut((donut, filling, icing, sprinkles, crumble, flakes, labelMaterial) => {
             this.filling = filling;
             this.icing = icing;
             this.sprinkles = sprinkles;
             this.crumble = crumble;
             this.flakes = flakes;
             this.scene.add(donut);
+            this.labelMaterial = labelMaterial;
 
             this.loaded = true;
         });
@@ -65,7 +68,10 @@ export default class ThreeScene {
     loadCrumble(flavour) {
         this.crumble.material.color.setHex(flavour);
     }
-
+    loadImage(image) {
+        this.labelMaterial.map = textureLoader.load(image);
+        this.labelMaterial.needsUpdate = true;
+    }
     orbitSetup() {
         this.controls = new OrbitControls(
             this.camera,

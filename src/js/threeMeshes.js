@@ -44,6 +44,11 @@ export const createDonut = (callback = () => null) => {
         donut.scale.set(40, 40, 40);
         donut.rotation.y = Math.PI / -1.7;
 
+        // fix donut texture scaling
+        let donutTexture = donut.children[0].children[1].material;
+        donutTexture.map.repeat.set(1, 5);
+
+
         let filling = donut.getObjectByName("filling");
         let icing = donut.getObjectByName("Icing001");
         let sprinkles = donut.getObjectByName("sprinkles");
@@ -61,7 +66,9 @@ export const createDonut = (callback = () => null) => {
         card.rotation.y = Math.PI / 1.08;
         donut.add(card);
 
-        callback(...[donut, filling, icing, sprinkles, crumble, flakes]);
+        let labelMaterial = card.children[1].material;
+
+        callback(...[donut, filling, icing, sprinkles, crumble, flakes, labelMaterial]);
     });
 }; 
 
