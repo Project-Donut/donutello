@@ -184,9 +184,8 @@ label {
     display: block;
 }
 .userInput {
-    background-color: aliceblue;
     width: 100%;
-    padding: 1em;
+    padding: 1em .5em 1em 1em;
 }
 
 .__input {

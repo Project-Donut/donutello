@@ -1,6 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@600;700&family=Lato:ital@0;1&display=swap');
 :root {
     --primary-color: #FF4C8E;
+    --color-heaven: #82D1E4;
+}
+
+::-webkit-scrollbar {
+    width: 0.5rem;
+
 }
 
 body{
