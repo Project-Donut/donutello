@@ -62,10 +62,10 @@ const updateTopping = () => {
 
         props.model.loadTopping(flavour.value.sprinkles[toppingFlavour.value].color);
         toppingFlavourSelected = flavour.value.crumble[toppingFlavour.value].name;
-    } else if (crumbleFlavour.value) {
+    } else if (crumbleFlavour.value !==null) {
         console.log(crumbleFlavour.value);
 
-        props.model.loadCrumble(flavour.value.crumble[toppingFlavour.value].color);
+        props.model.loadCrumble(flavour.value.crumble[crumbleFlavour.value].color);
         toppingFlavourSelected = flavour.value.crumble[crumbleFlavour.value].name;
     }
     
