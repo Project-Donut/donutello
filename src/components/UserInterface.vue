@@ -4,7 +4,7 @@ import { ref, onMounted, reactive, defineProps } from 'vue';
 import UserDetails from './UserDetails.vue';
 import recipe from '../assets/flavours.json';
 //create reactive state to send to api
-let state = reactive({ order: [] });
+
 //import json from assets
 const flavour = ref(recipe);
 
@@ -18,10 +18,17 @@ let filling = ref(null);
 let fillingFlavour = ref(null);
 let toppingSelected = ref(null);
 let toppingFlavourSelected = ref(null);
+let state = reactive({ order: [
+    {icingFlavour: null},
+    {fillingFlavour: null},
+    {toppingSelected: null},
+    {toppingFlavourSelected: null}
+] });
 const updateIcing = () => {
     if (icing.value !== null) {
         props.model.loadIcing(flavour.value.glaze[icing.value].color);
         icingFlavour = flavour.value.glaze[icing.value].taste;
+        state.order[0] = icingFlavour;
     }  
 }
 const updateFilling = () => {
@@ -33,7 +40,7 @@ const updateFilling = () => {
         props.model.filling.visible = false;
         fillingFlavour = 'none';
     }
-   
+    state.order[1] = fillingFlavour;
     
 }
 const selectTopping = () => {
@@ -53,8 +60,11 @@ const selectTopping = () => {
     }
      else if(topping.value !== null){
         toppingsAll.forEach(topping => { topping.visible = false; });
+        document.querySelector('.crumble').style.display = 'none';
+            document.querySelector('.topping').style.display = 'none';
         toppingSelected = flavour.value.toppings[topping.value].name;
     }
+    state.order[2] = toppingSelected;
 }
 const updateTopping = () => {
     if (toppingFlavour.value !==null && topping.value !== 2) {
@@ -68,14 +78,14 @@ const updateTopping = () => {
         props.model.loadCrumble(flavour.value.crumble[crumbleFlavour.value].color);
         toppingFlavourSelected = flavour.value.crumble[crumbleFlavour.value].name;
     }
-    
+    state.order[3] = toppingFlavourSelected;
     
 }
 
 const createOrder = () => {
 
-    state.order.push(icingFlavour, fillingFlavour, toppingSelected, toppingFlavourSelected);
-    console.log(state.order);
+    //state.order.push(icingFlavour, fillingFlavour, toppingSelected, toppingFlavourSelected);
+    //console.log(state.order);
 
 }
 
@@ -128,7 +138,7 @@ const createOrder = () => {
         
 
 
-        <UserDetails />
+        <UserDetails :donutDetails="state"/>
         <button class="__input" href="#" @click="createOrder()">Save this Nutty man</button>
     </div>
 
