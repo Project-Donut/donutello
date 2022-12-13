@@ -66,20 +66,20 @@ export default class ThreeScene {
     }
 
     loadIcing(flavour) {
-        this.icing.material.color.setHex(flavour.value);
+        this.icing.material.color.setHex(flavour);
     }
     loadFilling(flavour) {
-        this.filling.material.color.setHex(flavour.value);
+        this.filling.material.color.setHex(flavour);
     }
     loadSprinkles(flavour) {
-        this.sprinkles.material.color.setHex(flavour.value);
+        this.sprinkles.material.color.setHex(flavour);
     }
     loadTopping(flavour) {
-        this.sprinkles.material.color.setHex(flavour.value);
-        this.flakes.material.color.setHex(flavour.value);
+        this.sprinkles.material.color.setHex(flavour);
+        this.flakes.material.color.setHex(flavour);
     }
     loadCrumble(flavour) {
-        this.crumble.material.color.setHex(flavour.value);
+        this.crumble.material.color.setHex(flavour);
     }
     modelSetup() {
         //import donut glb

@@ -33,6 +33,20 @@
         "color": "0x9cbe80"
       }
     ],
+    "toppings":[
+      {
+        "name": "Sprinkles"
+       }, 
+       {
+        "name": "Flakes"
+       }, 
+       {
+        "name": "Crumble"
+       }, 
+       {
+        "name": "Geen topping"
+       }
+    ],
     "sprinkles": [
       {
         "name": "Wit",
