@@ -9,9 +9,11 @@ import 'primeicons/primeicons.css';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
+import InputSwitch from 'primevue/inputswitch';
 
 const app = createApp(App)
 app.use(PrimeVue);
+app.component("InputSwitch", InputSwitch)
 app.component("FileUpload", FileUpload);
 app.component("InputText", InputText);
 app.component("Dialog", Dialog);

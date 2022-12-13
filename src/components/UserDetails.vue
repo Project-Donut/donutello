@@ -9,28 +9,39 @@ const openModal = () => {
 const closeModal = () => {
     displayModal.value = false;
 }
-let voornaam = ref(null);
-let achternaam = ref(null);
-let bedrijf = ref(null);
-let mail = ref(null);
-let tel = ref(null);
-let adresLever1 = ref(null);
-let adresLever2 = ref(null);
-let customer = reactive({
-    order: [
-        { voornaam: null },
-        { achternaam: null },
-        { bedrijf: null },
-        { mail: null },
-        { tel: null },
-        { adresLever1: null },
-        { adresLever2: null }
+let checked = ref(true);
 
-    ]
+let customer = reactive({
+    voornaam: '',
+    achternaam: '',
+    bedrijf: '',
+    mail: '',
+    tel: '',
+    adresLever1: '',
+    adresLever2: '',
+    factuurLever1: '',
+    factuurLever2: ''
 });
+
+const setFactuurAdres = () => {
+    if (checked.value) {
+        customer.factuurLever1 = customer.adresLever1;
+        customer.factuurLever2 = customer.adresLever2;
+    } else {
+        customer.factuurLever1 = '';
+        customer.factuurLever2 = '';
+    }
+}
 const printCustomer = () => {
+    if(checked.value){
+        customer.factuurLever1 = customer.adresLever1;
+        customer.factuurLever2 = customer.adresLever2;
+    }
     console.log(customer);
 }
+onMounted(() => {
+    setFactuurAdres();
+});
 </script>
 
 <template>
@@ -45,12 +56,12 @@ const printCustomer = () => {
             <div class="__inputGroup">
                 <div class="__inputText">
                     <h5>Voornaam</h5>
-                    <InputText type="text" v-model="voornaam" />
+                    <InputText type="text" v-model="customer.voornaam" />
                     <span :style="{ marginLeft: '.5em' }">{{ value1 }}</span>
                 </div>
                 <div class="__inputText">
                     <h5>Achternaam</h5>
-                    <InputText type="text" v-model="achternaam" />
+                    <InputText type="text" v-model="customer.achternaam" />
                     <span :style="{ marginLeft: '.5em' }">{{ value1 }}</span>
                 </div>
             </div>
@@ -58,14 +69,14 @@ const printCustomer = () => {
                 <div class="__inputText">
                     <h5>Bedrijf*</h5>
                     <span class="p-float-label">
-                        <InputText id="bedrijf" type="text" v-model="bedrijf" />
+                        <InputText id="bedrijf" type="text" v-model="customer.bedrijf" />
                         <label for="bedrijf">Optioneel</label>
                     </span>
                 </div>
                 <div class="__inputText">
                     <h5>E-mail adres</h5>
                     <span class="p-float-label">
-                        <InputText id="mail" type="text" v-model="mail" />
+                        <InputText id="mail" type="text" v-model="customer.mail" />
                         <label for="mail">example@gmail.com</label>
                     </span>
                 </div>
@@ -73,7 +84,7 @@ const printCustomer = () => {
             <div class="__inputGroup">
                 <div class="__inputText">
                     <h5>Telefoonnummer</h5>
-                    <InputText type="text" v-model="tel" />
+                    <InputText type="text" v-model="customer.tel" />
                     <span :style="{ marginLeft: '.5em' }">{{ value1 }}</span>
                 </div>
             </div>
@@ -81,30 +92,34 @@ const printCustomer = () => {
                 <div class="__inputText">
                     <h5>Lever adres 1</h5>
                     <span class="p-float-label">
-                        <InputText id="adresLever1" type="text" v-model="adresLever1" />
+                        <InputText id="adresLever1" type="text" v-model="customer.adresLever1" />
                         <label for="adresLever1">straat naam</label>
                     </span>
                 </div>
                 <div class="__inputText">
                     <h5>Lever adres 2</h5>
                     <span class="p-float-label">
-                        <InputText id="adresLever2" type="text" v-model="adresLever2" />
+                        <InputText id="adresLever2" type="text" v-model="customer.adresLever2" />
                         <label for="adresLever2">postcode + stad</label>
                     </span>
                 </div>
             </div>
-            <div class="__inputGroup">
+            <h5>Zelfde als lever adres</h5>
+                    <InputSwitch v-model="checked" @change="setFactuurAdres" />
+                    
+            <div class="__inputGroup" v-if="!checked">
+               
                 <div class="__inputText">
                     <h5>Factuur adres 1</h5>
                     <span class="p-float-label">
-                        <InputText id="factuurLever1" type="text" v-model="factuurLever1" />
+                        <InputText id="factuurLever1" type="text" v-model="customer.factuurLever1" />
                         <label for="factuurLever1">{{ adresLever1 }}</label>
                     </span>
                 </div>
                 <div class="__inputText">
                     <h5>Factuur adres 2</h5>
                     <span class="p-float-label">
-                        <InputText id="factuurLever2" type="text" v-model="factuurLever2" />
+                        <InputText id="factuurLever2" type="text" v-model="customer.factuurLever2" />
                         <label for="factuurLever2">{{ adresLever2 }}</label>
                     </span>
                 </div>
