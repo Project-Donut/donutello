@@ -96,10 +96,12 @@ onMounted(() => {
 
 
     <Button label="Ga naar bestellen" icon="pi pi-chevron-right" @click="openModal" />
-    <Dialog header="Header" v-model:visible="displayModal" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-        :style="{ width: '50vw' }" :modal="true">
-        <h4>Sale</h4>
-        <p>lorem text bevestig bestelling met gegevens</p>
+    <Dialog header="Bestelling" v-model:visible="displayModal" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+        :style="{ width: '50vw', background: '#e72c70' }" :modal="true">
+        <h3>Gegevens</h3>
+        <p>Bijna klaar! Als je hier nog eventjes je gegevens invult, ons laat weten hoeveel donuts je nodig hebt en tegen wanneer,
+             dan beginnen wij met bakken!
+        </p>
         <div class="__userData">
             <div class="__inputGroup">
                 <div class="__inputText">
@@ -166,8 +168,10 @@ onMounted(() => {
                     </span>
                 </div>
             </div>
+            <div class="__inputText __inputText-slider">
             <h5>Facturatie adres is hetzelfde als lever adres.</h5>
             <InputSwitch v-model="checked" @change="setFactuurAdres" />
+            </div>
 
             <div class="__inputGroup" v-if="!checked">
 
@@ -210,10 +214,20 @@ onMounted(() => {
 
     margin: 1rem;
 }
+@media screen and (max-width: 600px) {
+    .__inputGroup {
+        flex-direction: column;
+    }
+}
+    
+
 
 .__inputText {
     display: block;
     margin-left: 1rem;
+}
+ .__inputText-slider {
+    margin-left: 32px;
 }
 
 .p-button {
@@ -234,11 +248,17 @@ p {
 .p-dialog .p-button {
     min-width: 6rem;
 }
+
 .p-calendar {
     width: auto;
 }
 .p-dialog-content {
     display: flex;
     justify-content: center;
+}
+</style>
+<style>
+.p-dialog .p-dialog-header{
+    background: #1d76c3;
 }
 </style>
