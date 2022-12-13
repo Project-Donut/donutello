@@ -20,6 +20,7 @@ const donutDetails = reactive({
     filling: flavour.value.filling[selectedFilling.value].taste,
     topping: flavour.value.toppings[selectedToppingType.value].name,
     toppingFlavor: flavour.value.sprinkles[selectedSprinkleFlavor.value].name,
+    crumbleFlavor: flavour.value.crumble[selectedCrumbleFlavor.value].name,
     image: '',
 })
 

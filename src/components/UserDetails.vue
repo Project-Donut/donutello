@@ -2,6 +2,7 @@
 import { ref, onMounted, reactive, defineProps } from 'vue';
 import { postOrder } from '../api/order.js';
 import { postCustomer } from '../api/customer.js';
+import {postDonut} from '../api/donut.js';
 const props = defineProps(['donutDetails']);
 const displayModal = ref(false);
 const openModal = () => {
@@ -48,12 +49,36 @@ const placeOrder = async() => {
         phone: customer.tel,
         billingAddress,
     };
-    console.log(customerDoc);
+    
     let result = await postCustomer(customerDoc);
     if(result.status !== 'success') return;
     let customerId = result.data._id;
+    //postDonut
+
+    let crumbleFlavor, toppingFlavor = 'Geen';
+    
+    if (props.donutDetails.topping === 'Crumble') {
+        crumbleFlavor = props.donutDetails.crumbleFlavor;
+        console.log(crumbleFlavor);
+    } else if (props.donutDetails.topping !== 'Geen') {
+        toppingFlavor = props.donutDetails.toppingFlavor;
+    }
+
+    let donutDoc = {
+        icingFlavour: props.donutDetails.icing,
+        toppingType: props.donutDetails.topping,
+        toppingColour: toppingFlavor,
+        crumbleFlavour: crumbleFlavor,
+        fillingFlavour: props.donutDetails.filling,
+        logoImage: props.donutDetails.image,
+    }
+    console.log(donutDoc);
+    let donutResult = await postDonut(donutDoc);
+    if(donutResult.status !== 'success') return;
+    let donutId = donutResult.data._id;
     result = await postOrder({
         customer: customerId,
+        donut: donutId,
         address: shippingAddress,
         count: 0,
         dateBy: (new Date()).toLocaleString()
