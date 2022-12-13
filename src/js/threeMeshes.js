@@ -61,7 +61,9 @@ export const createDonut = (callback = () => null) => {
         card.rotation.y = Math.PI / 1.08;
         donut.add(card);
 
-        callback(...[donut, filling, icing, sprinkles, crumble, flakes]);
+        let labelMaterial = card.children[1].material;
+
+        callback(...[donut, filling, icing, sprinkles, crumble, flakes, labelMaterial]);
     });
 }; 
 

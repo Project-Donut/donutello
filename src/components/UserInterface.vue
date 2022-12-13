@@ -18,6 +18,7 @@ let filling = ref(null);
 let fillingFlavour = ref(null);
 let toppingSelected = ref(null);
 let toppingFlavourSelected = ref(null);
+let labelImage = ref("");
 const updateIcing = () => {
     if (icing.value !== null) {
         props.model.loadIcing(flavour.value.glaze[icing.value].color);
@@ -79,8 +80,8 @@ const onUpload = e => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-        console.log(reader.result);
-        
+        labelImage = reader.result;
+        props.model.loadImage(reader.result);
     };
 }
 
