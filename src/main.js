@@ -9,6 +9,8 @@ import './style.css';
 import './prime_override.css';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
+import DropDown from 'primevue/dropdown';
+import InputText from 'primevue/inputtext';
 
 const app = createApp(App)
 app.use(PrimeVue);
@@ -16,4 +18,7 @@ app.component("FileUpload", FileUpload);
 
 app.component("Dialog", Dialog);
 app.component("Button", Button);
+app.component("DropDown", DropDown);
+app.component("InputText", InputText);
+
 app.mount('#app');

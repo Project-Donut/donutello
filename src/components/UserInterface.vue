@@ -10,7 +10,7 @@ const flavour = ref(recipe);
 
 const props = defineProps(['model']);
 let icingFlavour = ref(null);
-let icing = ref(null);
+let icing = ref(0);
 let topping = ref(0);
 let toppingFlavour = ref(null);
 let crumbleFlavour = ref(null);
@@ -19,7 +19,8 @@ let fillingFlavour = ref(null);
 let toppingSelected = ref(null);
 let toppingFlavourSelected = ref(null);
 let labelImage = ref("");
-const updateIcing = () => {
+const updateIcing = (e) => {
+    icing.value = flavour.value.glaze.findIndex(icing => icing.taste === e.value.taste);
     if (icing.value !== null) {
         props.model.loadIcing(flavour.value.glaze[icing.value].color);
         icingFlavour = flavour.value.glaze[icing.value].taste;
@@ -92,10 +93,22 @@ const onUpload = e => {
         <input class="__input" type="text" placeholder="Name your nutty boy">
 
         <label for="flavours">Choose your flavour</label>
-        <select name="flavours" class="__input" v-model="icing" @click="updateIcing()">
-            <option disabled value=null>Please select a flavour</option>
-            <option v-for="(flavour, index) in flavour.glaze" :value="index">{{ flavour.taste }}</option>
-        </select>
+        <DropDown :modelValue="flavour.glaze[icing]" :options="flavour.glaze" @change="updateIcing">
+            <template #value="slot">
+                <div class="option" v-if="slot.value">
+                    <div class="option__color" :style="{backgroundColor: slot.value?.color.replace('0x', '#')}"></div>
+                    <div>{{ slot.value?.taste }}</div>
+                </div>
+                <div v-else>{{ slot.placeholder }}</div>
+            </template>
+            <template #option="{ option }">
+                <div class="option">
+                    <div class="option__color" :style="{backgroundColor: option?.color.replace('0x', '#')}"></div>
+                    <div>{{ option.taste }}</div>
+                </div>
+            </template>
+        </DropDown>
+       
 
         <label for="filling">Fill me up baby</label>
         <select name="filling" class="__input __input-filling" v-model="filling" @click="updateFilling()">
@@ -163,5 +176,17 @@ const onUpload = e => {
 
 .crumble {
     display: none;
+}
+
+.option {
+    display: flex;
+}
+
+.option .option__color {
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    margin-right: 10px;
+    background-color: gray;
 }
 </style>
