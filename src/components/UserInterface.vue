@@ -9,90 +9,67 @@ import recipe from '../assets/flavours.json';
 const flavour = ref(recipe);
 
 const props = defineProps(['model']);
-let icingFlavour = ref(null);
-let icing = ref(null);
-let topping = ref(0);
-let toppingFlavour = ref(null);
-let crumbleFlavour = ref(null);
-let filling = ref(null);
-let fillingFlavour = ref(null);
-let toppingSelected = ref(null);
-let toppingFlavourSelected = ref(null);
-let state = reactive({ order: [
-    {icingFlavour: null},
-    {fillingFlavour: null},
-    {toppingSelected: null},
-    {toppingFlavourSelected: null}
-] });
+let selectedIcing = ref(0);
+let selectedFilling = ref(3);
+let selectedToppingType = ref(1);
+let selectedSprinkleFlavor = ref(0);
+let selectedCrumbleFlavor = ref(0);
+
 let labelImage = ref("");
-const updateIcing = () => {
-    if (icing.value !== null) {
-        props.model.loadIcing(flavour.value.glaze[icing.value].color);
-        icingFlavour = flavour.value.glaze[icing.value].taste;
-        state.order[0] = icingFlavour;
-    }  
+
+const onChangeIcing = (e) => {
+    selectedIcing.value = flavour.value.glaze.findIndex(icing => icing.taste === e.value.taste);
+    if (selectedIcing.value !== null) {
+        props.model.loadIcing(flavour.value.glaze[selectedIcing.value].color);
+    }
 }
-const updateFilling = () => {
-    if (filling.value !== null && filling.value !== 4) {
-        props.model.loadFilling(flavour.value.filling[filling.value].color);
-        fillingFlavour = flavour.value.filling[filling.value].taste;
+
+const onChangeFilling = (e) => {
+    selectedFilling.value = flavour.value.filling.findIndex(fill => fill.taste === e.value.taste);
+    if (flavour.value.filling[selectedFilling.value].taste !== 'Geen') {
+        props.model.loadFilling(flavour.value.filling[selectedFilling.value].color);
         props.model.filling.visible = true;
     } else {
         props.model.filling.visible = false;
-        fillingFlavour = 'none';
     }
     state.order[1] = fillingFlavour;
     
 }
-const selectTopping = () => {
+
+const onChangeToppingType = e => {
+    selectedToppingType.value = flavour.value.toppings.findIndex(topping => topping.name === e.value.name);
+
     const toppingsAll = [props.model.sprinkles, props.model.flakes, props.model.crumble];
     toppingsAll.forEach(topping => { topping.visible = false; });
-    if (topping.value !== null && topping.value !== 3) {
 
-        toppingsAll[topping.value].visible = true;
-        if (topping.value == 2) {
-            document.querySelector('.crumble').style.display = 'block';
-            document.querySelector('.topping').style.display = 'none';
-        } else {
-            document.querySelector('.crumble').style.display = 'none';
-            document.querySelector('.topping').style.display = 'block';
-        }
-        toppingSelected = flavour.value.toppings[topping.value].name;
-    }
-    else if (topping.value !== null) {
-        toppingsAll.forEach(topping => { topping.visible = false; });
-        document.querySelector('.crumble').style.display = 'none';
-            document.querySelector('.topping').style.display = 'none';
-        toppingSelected = flavour.value.toppings[topping.value].name;
+    if (flavour.value.toppings[selectedToppingType.value].name !== 'Geen') {
+        toppingsAll[selectedToppingType.value - 1].visible = true;
     }
     state.order[2] = toppingSelected;
 }
-const updateTopping = () => {
-    if (toppingFlavour.value !== null && topping.value !== 2) {
-        console.log(toppingFlavour.value);
 
-        props.model.loadTopping(flavour.value.sprinkles[toppingFlavour.value].color);
-        toppingFlavourSelected = flavour.value.crumble[toppingFlavour.value].name;
-    } else if (crumbleFlavour.value !== null) {
-        console.log(crumbleFlavour.value);
+const onChangeToppingFlavor = e => {
+    let toppingType = flavour.value.toppings[selectedToppingType.value].name;
+    if (toppingType === 'Geen') return;
 
-        props.model.loadCrumble(flavour.value.crumble[crumbleFlavour.value].color);
-        toppingFlavourSelected = flavour.value.crumble[crumbleFlavour.value].name;
+    if (toppingType === 'Sprinkles' || toppingType === 'Flakes') {
+        selectedSprinkleFlavor.value = flavour.value.sprinkles.findIndex(taste => taste.name === e.value.name);
+        props.model.loadTopping(flavour.value.sprinkles[selectedSprinkleFlavor.value].color);
+    }
+    else if (toppingType === 'Crumble') {
+        selectedCrumbleFlavor.value = flavour.value.crumble.findIndex(taste => taste.name === e.value.name);
+        props.model.loadCrumble(flavour.value.crumble[selectedCrumbleFlavor.value].color);
     }
     state.order[3] = toppingFlavourSelected;
     
 }
 
 const createOrder = () => {
-
-    //state.order.push(icingFlavour, fillingFlavour, toppingSelected, toppingFlavourSelected);
-    //console.log(state.order);
-
+    //state.order.push(weirdIcing, weirdFillingFlavor, weirdTopping, weirdToppingFlavor);
 }
 
 const onUpload = e => {
     const file = e.files[0];
-    // file to base64
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
@@ -106,53 +83,98 @@ const onUpload = e => {
 <template>
     <div class="userInput">
         <input class="__input" type="text" placeholder="Name your nutty boy">
-
-        <label for="flavours">Choose your flavour</label>
-        <select name="flavours" class="__input" v-model="icing" @click="updateIcing()">
-            <option disabled value=null>Please select a flavour</option>
-            <option v-for="(flavour, index) in flavour.glaze" :value="index">{{ flavour.taste }}</option>
-        </select>
-
-        <label for="filling">Fill me up baby</label>
-        <select name="filling" class="__input __input-filling" v-model="filling" @click="updateFilling()">
-            <option disabled value=null>Please select a flavour</option>
-            <option v-for="(flavour, index) in flavour.filling" :value="index">{{ flavour.taste }}</option>
-        </select>
-
-        <label for="topping">Selecteer een topping!</label>
-        <select name="topping" class="__input __input-topping" v-model="topping" @click="selectTopping()">
-            <option disabled value=null>Please select a topping</option>
-            <option v-for="(flavour, index) in flavour.toppings" :value="index">{{ flavour.name }}</option>
-        </select>
-
-        <div class="topping">
+        <div class="__input--group">
+            <label for="flavours">Welke glazuur wil je?</label>
+            <DropDown :modelValue="flavour.glaze[selectedIcing]" :options="flavour.glaze" @change="onChangeIcing">
+                <template #value="slot">
+                    <div class="option" v-if="slot.value">
+                        <div class="option__color" :style="{ backgroundColor: slot.value?.color.replace('0x', '#') }">
+                        </div>
+                        <div>{{ slot.value?.taste }}</div>
+                    </div>
+                </template>
+                <template #option="{ option }">
+                    <div class="option">
+                        <div class="option__color" :style="{ backgroundColor: option?.color.replace('0x', '#') }"></div>
+                        <div>{{ option.taste }}</div>
+                    </div>
+                </template>
+            </DropDown>
+        </div>
+        <div class="__input--group">
+            <label for="filling">Wat zit er in verstopt?</label>
+            <DropDown :modelValue="flavour.filling[selectedFilling]" :options="flavour.filling"
+                @change="onChangeFilling">
+                <template #value="slot">
+                    <div class="option" v-if="slot.value">
+                        <div class="option__color" :style="{ backgroundColor: slot.value?.color.replace('0x', '#') }">
+                        </div>
+                        <div>{{ slot.value?.taste }}</div>
+                    </div>
+                </template>
+                <template #option="{ option }">
+                    <div class="option">
+                        <div class="option__color" :style="{ backgroundColor: option?.color.replace('0x', '#') }"></div>
+                        <div>{{ option.taste }}</div>
+                    </div>
+                </template>
+            </DropDown>
+        </div>
+        <div class="__input--group">
+            <label for="topping">Strooi er wat over!</label>
+            <DropDown :modelValue="flavour.toppings[selectedToppingType]" :options="flavour.toppings"
+                @change="onChangeToppingType">
+                <template #value="option">{{ option?.value.name }}</template>
+                <template #option="{ option }">{{ option?.name }}</template>
+            </DropDown>
+        </div>
+        <template v-if="selectedToppingType === 1 || selectedToppingType === 2">
             <label for="toppingFlavour">Welke topping kleur?</label>
-            <select name="toppingFlavour" class="__input __input-topping_flavour" v-model="toppingFlavour"
-                @click="updateTopping()">
-                <option disabled value=null>Please select a flavour</option>
-                <option v-for="(flavour, index) in flavour.sprinkles" :value="index">{{ flavour.name }}</option>
-            </select>
-        </div>
-
-        <div class="crumble">
-            <label for="crumbleFlavour">Welke crumble smaak?</label>
-            <select name="crumbleFlavour" class="__input __input-crumble_flavour" v-model="crumbleFlavour"
-                @click="updateTopping()">
-                <option disabled value=null>Please select a flavour</option>
-                <option v-for="(flavour, index) in flavour.crumble" :value="index">{{ flavour.name }}</option>
-            </select>
-        </div>
+            <DropDown :modelValue="flavour.sprinkles[selectedSprinkleFlavor]" :options="flavour.sprinkles"
+                @change="onChangeToppingFlavor">
+                <template #value="slot">
+                    <div class="option" v-if="slot.value">
+                        <div class="option__color" :style="{ backgroundColor: slot.value?.color.replace('0x', '#') }">
+                        </div>
+                        <div>{{ slot.value?.name }}</div>
+                    </div>
+                </template>
+                <template #option="{ option }">
+                    <div class="option">
+                        <div class="option__color" :style="{ backgroundColor: option?.color.replace('0x', '#') }"></div>
+                        <div>{{ option.name }}</div>
+                    </div>
+                </template>
+            </DropDown>
+        </template>
+        <template v-if="selectedToppingType === 3">
+            <label for="toppingFlavour">Welke crumble smaak?</label>
+            <DropDown :modelValue="flavour.crumble[selectedCrumbleFlavor]" :options="flavour.crumble"
+                @change="onChangeToppingFlavor">
+                <template #value="slot">
+                    <div class="option" v-if="slot.value">
+                        <div class="option__color" :style="{ backgroundColor: slot.value?.color.replace('0x', '#') }">
+                        </div>
+                        <div>{{ slot.value?.name }}</div>
+                    </div>
+                </template>
+                <template #option="{ option }">
+                    <div class="option">
+                        <div class="option__color" :style="{ backgroundColor: option?.color.replace('0x', '#') }"></div>
+                        <div>{{ option.name }}</div>
+                    </div>
+                </template>
+            </DropDown>
+        </template>
         <div class="imageUpload">
             <label for="imageUpload">Upload een cool label 😎</label>
-            <FileUpload mode="basic" accept="image/*" :maxFileSize="500000" :customUpload="true" @uploader="onUpload" :auto="true"
-                chooseLabel="Upload Afbeelding" />
+            <FileUpload mode="basic" accept="image/*" :maxFileSize="500000" :customUpload="true" @uploader="onUpload"
+                :auto="true" chooseLabel="Upload Afbeelding" />
         </div>
 
         <UserDetails :donutDetails="state"/>
         <button class="__input" href="#" @click="createOrder()">Save this Nutty man</button>
     </div>
-
-
 </template>
 
 <style scoped>
@@ -173,11 +195,28 @@ const onUpload = e => {
     border-radius: 5px;
 }
 
+.__input--group {
+    display: flex;
+    flex-direction: column;
+}
+
 .topping {
     display: 1;
 }
 
 .crumble {
     display: none;
+}
+
+.option {
+    display: flex;
+}
+
+.option .option__color {
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    margin-right: 10px;
+    background-color: gray;
 }
 </style>
