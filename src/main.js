@@ -12,10 +12,11 @@ import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import InputSwitch from 'primevue/inputswitch';
 import DropDown from 'primevue/dropdown';
-
+import Calendar from 'primevue/calendar';
 const app = createApp(App)
 app.use(PrimeVue);
 app.component("InputSwitch", InputSwitch)
+app.component("Calendar", Calendar)
 app.component("FileUpload", FileUpload);
 app.component("InputText", InputText);
 app.component("Dialog", Dialog);
