@@ -39,14 +39,14 @@ const placeOrder = async() => {
         customer.factuurLever1 = customer.adresLever1;
         customer.factuurLever2 = customer.adresLever2;
     }
-    let fullname = customer.voornaam + ' ' + customer.achternaam;
+    let fullName = customer.voornaam + ' ' + customer.achternaam;
     let billingAddress = customer.factuurLever1 + ' ' + customer.factuurLever2;
     let shippingAddress = customer.adresLever1 + ' ' + customer.adresLever2;
     let customerDoc = {
-        name: fullname,
+        fullName,
         email: customer.mail,
         phone: customer.tel,
-        billingAddress: billingAddress,
+        billingAddress,
     };
     console.log(customerDoc);
     let result = await postCustomer(customerDoc);
@@ -54,7 +54,7 @@ const placeOrder = async() => {
     let customerId = result.data._id;
     result = await postOrder({
         customer: customerId,
-        shippingAddress,
+        address: shippingAddress,
         count: 0,
         dateBy: (new Date()).toLocaleString()
     });
