@@ -4,13 +4,11 @@ import DonuttelloLogo from './components/svg/DonuttelloLogo.vue';
 import UserInterface from './components/UserInterface.vue';
 import ThreeScene from './scripts/three.js';
 let model = ref(null);
-let taste = ref('0xd19c0a');
 let viewPort = ref(null);
 const canvasSetup = () => {
     if (viewPort.value) {
         model.value = new ThreeScene(viewPort.value);
         model.value.sceneSetup();
-        //model.value.loadIcing(taste);
     }
 }
 onMounted(() => {
@@ -64,9 +62,38 @@ onMounted(() => {
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
 }
 
-.__viewPort {
+.viewPort {
     grid-area: viewport;
     background-color: var(--color-heaven);
     height: 100vh;
+}
+
+@media screen and (max-width: 768px) {
+    .app {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .__header {
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        z-index: 10;
+    }
+
+    .__viewPort {
+        position: absolute;
+        top: 60px;
+        height: 100vh;
+        width: 100vw;
+    }
+
+    .__userInterface {
+        z-index: 10;
+        background-color: transparent;
+    }
+    ::-webkit-scrollbar {
+        display: none;
+    }
 }
 </style>

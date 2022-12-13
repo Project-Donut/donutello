@@ -219,4 +219,15 @@ label {
     border-radius: 50%;
     margin-right: 10px;
 }
+
+@media screen and (max-width: 768px) {
+    .userInput {
+        height: fit-content;
+        margin-top: 100vw;
+        background-color: var(--surface-100);
+        border-radius: 1em 1em 0 0;
+        border: 1px solid var(--surface-400);
+    box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.2);
+    }
+}
 </style>

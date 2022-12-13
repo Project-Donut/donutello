@@ -6,6 +6,7 @@ const textureLoader = new THREE.TextureLoader();
 
 export default class ThreeScene {
     constructor(viewPort) {
+        this.isMobile = window.innerWidth < 768;
         this.view = viewPort;
         this.scene;
         this.camera;
@@ -16,15 +17,20 @@ export default class ThreeScene {
 
     sceneSetup() {
         this.scene = new THREE.Scene();
+        let width = this.view.offsetWidth;
+        let height = this.view.offsetHeight;
+        if (this.isMobile) {
+            height = this.view.offsetWidth;
+        }
         this.camera = new THREE.PerspectiveCamera(
             75,
-            this.view.offsetWidth / this.view.offsetHeight,
+            width / height,
             0.1,
             1000
         );
         this.camera.position.z = 5;
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
-        this.renderer.setSize(this.view.offsetWidth, this.view.offsetHeight);
+        this.renderer.setSize(width, height);
 
         this.view.appendChild(this.renderer.domElement);
         this.renderer.setClearColor(0x000000, 0);
