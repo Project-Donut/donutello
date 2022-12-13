@@ -36,7 +36,7 @@ export default class ThreeScene {
     /**
      * @param {THREE.} gltf
      */
-    loadDonut(gltf) {
+    loadDonut() {
         createDonut((donut, filling, icing, sprinkles, crumble, flakes) => {
             this.filling = filling;
             this.icing = icing;
