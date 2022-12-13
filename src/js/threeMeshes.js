@@ -64,3 +64,34 @@ export const createDonut = (callback = () => null) => {
         callback(...[donut, filling, icing, sprinkles, crumble, flakes]);
     });
 }; 
+
+export const createLights = () => {
+    const lightGroup = new THREE.Group();
+    
+    const ambientLight = new THREE.AmbientLight(0xddccff, 0.5);
+
+    const spotlightMain = new THREE.SpotLight(0xffffff, 1.2);
+    spotlightMain.position.set(5, 4, -10);
+    spotlightMain.castShadow = true;
+    spotlightMain.shadow.mapSize.width = 1024;
+    spotlightMain.shadow.mapSize.height = 1024;
+    spotlightMain.shadow.camera.near = 500;
+    spotlightMain.shadow.camera.far = 4000;
+    spotlightMain.shadow.camera.fov = 30;
+
+    const spotlight2 = new THREE.SpotLight(0xffffff, 0.8);
+    spotlight2.position.set(-5, 4, 10);
+    spotlight2.castShadow = true;
+    spotlight2.shadow.mapSize.width = 1024;
+    spotlight2.shadow.mapSize.height = 1024;
+    spotlight2.shadow.camera.near = 500;
+    spotlight2.shadow.camera.far = 4000;
+    spotlight2.shadow.camera.fov = 30;
+
+    // add lights to group
+    lightGroup.add(ambientLight);
+    lightGroup.add(spotlightMain);
+    lightGroup.add(spotlight2);
+
+    return lightGroup;
+}
