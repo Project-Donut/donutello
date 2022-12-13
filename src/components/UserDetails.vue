@@ -2,15 +2,23 @@
 import { ref, onMounted, reactive, defineProps } from 'vue';
 import { postOrder } from '../api/order.js';
 import { postCustomer } from '../api/customer.js';
-import {postDonut} from '../api/donut.js';
+import { postDonut } from '../api/donut.js';
 const props = defineProps(['donutDetails']);
 const displayModal = ref(false);
+const displayBasic = ref(false);
 const openModal = () => {
     displayModal.value = true;
     console.log(props.donutDetails);
 };
 const closeModal = () => {
     displayModal.value = false;
+}
+const openBasic = () => {
+    displayBasic.value = true;
+   
+};
+const closeBasic = () => {
+    displayBasic.value = false;
 }
 let checked = ref(true);
 
@@ -20,8 +28,8 @@ let customer = reactive({
     bedrijf: '',
     mail: '',
     tel: '',
-    count:'',
-    date:'',
+    count: '',
+    date: '',
     adresLever1: '',
     adresLever2: '',
     factuurLever1: '',
@@ -37,7 +45,7 @@ const setFactuurAdres = () => {
         customer.factuurLever2 = '';
     }
 }
-const placeOrder = async() => {
+const placeOrder = async () => {
     if (checked.value) {
         customer.factuurLever1 = customer.adresLever1;
         customer.factuurLever2 = customer.adresLever2;
@@ -52,14 +60,14 @@ const placeOrder = async() => {
         phone: customer.tel,
         billingAddress,
     };
-    
+
     let result = await postCustomer(customerDoc);
-    if(result.status !== 'success') return;
+    if (result.status !== 'success') return;
     let customerId = result.data._id;
     //postDonut
 
     let crumbleFlavor, toppingFlavor = 'Geen';
-    
+
     if (props.donutDetails.topping === 'Crumble') {
         crumbleFlavor = props.donutDetails.crumbleFlavor;
         console.log(crumbleFlavor);
@@ -76,7 +84,7 @@ const placeOrder = async() => {
         logoImage: props.donutDetails.image,
     }
     let donutResult = await postDonut(donutDoc);
-    if(donutResult.status !== 'success') return;
+    if (donutResult.status !== 'success') return;
     let donutId = donutResult.data._id;
     result = await postOrder({
         customer: customerId,
@@ -85,7 +93,10 @@ const placeOrder = async() => {
         count: customer.count,
         dateBy: customer.date
     });
-    
+
+    closeModal();
+    openBasic();
+
 
 }
 onMounted(() => {
@@ -100,8 +111,9 @@ onMounted(() => {
     <Dialog header="Bestelling" v-model:visible="displayModal" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
         :style="{ width: '50vw', background: '#e72c70' }" :modal="true">
         <h3>Gegevens</h3>
-        <p>Bijna klaar! Als je hier nog eventjes je gegevens invult, ons laat weten hoeveel donuts je nodig hebt en tegen wanneer,
-             dan beginnen wij met bakken!
+        <p>Bijna klaar! Als je hier nog eventjes je gegevens invult, ons laat weten hoeveel donuts je nodig hebt en
+            tegen wanneer,
+            dan beginnen wij met bakken!
         </p>
         <div class="__userData">
             <div class="__inputGroup">
@@ -148,9 +160,9 @@ onMounted(() => {
                 <div class="__inputText">
                     <h5>Leverdatum</h5>
                     <div class="field col-12 md:col-4">
-                    <label for="time24"></label>
-                    <Calendar inputId="time24" v-model="customer.date" :showTime="true" :showSeconds="false" />
-                </div>
+                        <label for="time24"></label>
+                        <Calendar inputId="time24" v-model="customer.date" :showTime="true" :showSeconds="false" />
+                    </div>
                 </div>
             </div>
             <div class="__inputGroup">
@@ -170,8 +182,8 @@ onMounted(() => {
                 </div>
             </div>
             <div class="__inputText __inputText-slider">
-            <h5>Facturatie adres is hetzelfde als lever adres.</h5>
-            <InputSwitch v-model="checked" @change="setFactuurAdres" />
+                <h5>Facturatie adres is hetzelfde als lever adres.</h5>
+                <InputSwitch v-model="checked" @change="setFactuurAdres" />
             </div>
 
             <div class="__inputGroup" v-if="!checked">
@@ -192,12 +204,21 @@ onMounted(() => {
                 </div>
             </div>
         </div>
+
+        
         <template #footer>
             <Button label="Cancel" icon="pi pi-times" @click="closeModal" class="p-button-text" />
             <Button label="Bestel" icon="pi pi-check" @click="placeOrder" autofocus />
         </template>
     </Dialog>
-
+    <Dialog header="Bestelling ontvangen!" v-model:visible="displayBasic"
+            :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '50vw' }">
+            <h2>Bedankt voor je bestelling!</h2>
+            <p>Jouw gepersonaliseerde donuts zijn onderweg! Kijk er al maar naar uit 😉</p>
+            <template #footer>
+                <Button label="Ok!" icon="pi pi-check" @click="closeBasic" autofocus />
+            </template>
+        </Dialog>
 </template>
 
 
@@ -215,19 +236,21 @@ onMounted(() => {
 
     margin: 1rem;
 }
+
 @media screen and (max-width: 600px) {
     .__inputGroup {
         flex-direction: column;
     }
 }
-    
+
 
 
 .__inputText {
     display: block;
     margin-left: 1rem;
 }
- .__inputText-slider {
+
+.__inputText-slider {
     margin-left: 32px;
 }
 
@@ -253,13 +276,14 @@ p {
 .p-calendar {
     width: auto;
 }
+
 .p-dialog-content {
     display: flex;
     justify-content: center;
 }
 </style>
 <style>
-.p-dialog .p-dialog-header{
+.p-dialog .p-dialog-header {
     background: #1d76c3;
 }
 </style>
