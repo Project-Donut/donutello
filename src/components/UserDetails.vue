@@ -20,6 +20,8 @@ let customer = reactive({
     bedrijf: '',
     mail: '',
     tel: '',
+    count:'',
+    date:'',
     adresLever1: '',
     adresLever2: '',
     factuurLever1: '',
@@ -80,8 +82,8 @@ const placeOrder = async() => {
         customer: customerId,
         donut: donutId,
         address: shippingAddress,
-        count: 0,
-        dateBy: (new Date()).toLocaleString()
+        count: customer.count,
+        dateBy: customer.date
     });
     console.log(result);
     // let order = {
@@ -110,12 +112,12 @@ onMounted(() => {
                 <div class="__inputText">
                     <h5>Voornaam</h5>
                     <InputText type="text" v-model="customer.voornaam" />
-                    <span :style="{ marginLeft: '.5em' }">{{ value1 }}</span>
+                    <span :style="{ marginLeft: '.5em' }"></span>
                 </div>
                 <div class="__inputText">
                     <h5>Achternaam</h5>
                     <InputText type="text" v-model="customer.achternaam" />
-                    <span :style="{ marginLeft: '.5em' }">{{ value1 }}</span>
+                    <span :style="{ marginLeft: '.5em' }"></span>
                 </div>
             </div>
             <div class="__inputGroup">
@@ -138,7 +140,21 @@ onMounted(() => {
                 <div class="__inputText">
                     <h5>Telefoonnummer</h5>
                     <InputText type="text" v-model="customer.tel" />
-                    <span :style="{ marginLeft: '.5em' }">{{ value1 }}</span>
+                    <span :style="{ marginLeft: '.5em' }"></span>
+                </div>
+            </div>
+            <div class="__inputGroup">
+                <div class="__inputText">
+                    <h5>Aantal donuts</h5>
+                    <InputText type="text" v-model="customer.count" />
+                    <span :style="{ marginLeft: '.5em' }"></span>
+                </div>
+                <div class="__inputText">
+                    <h5>Leverdatum</h5>
+                    <div class="field col-12 md:col-4">
+                    <label for="time24"></label>
+                    <Calendar inputId="time24" v-model="customer.date" :showTime="true" :showSeconds="false" />
+                </div>
                 </div>
             </div>
             <div class="__inputGroup">
@@ -157,7 +173,7 @@ onMounted(() => {
                     </span>
                 </div>
             </div>
-            <h5>Zelfde als lever adres</h5>
+            <h5>Facturatie adres is hetzelfde als lever adres.</h5>
             <InputSwitch v-model="checked" @change="setFactuurAdres" />
 
             <div class="__inputGroup" v-if="!checked">
@@ -225,7 +241,9 @@ p {
 .p-dialog .p-button {
     min-width: 6rem;
 }
-
+.p-calendar {
+    width: auto;
+}
 .p-dialog-content {
     display: flex;
     justify-content: center;
