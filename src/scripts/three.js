@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 //import gltf loader
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { createCard } from "../js/threeMeshes";
+import { createDonut } from "../js/threeMeshes";
 
 export default class ThreeScene {
     constructor(viewPort) {
@@ -31,7 +31,7 @@ export default class ThreeScene {
         this.render();
         this.orbitSetup();
         this.lightsSetup();
-        this.modelSetup();
+        this.loadDonut();
         this.animate();
     }
 
@@ -39,30 +39,16 @@ export default class ThreeScene {
      * @param {THREE.} gltf
      */
     loadDonut(gltf) {
-        let donut = gltf.scene;
-        donut.scale.set(40, 40, 40);
-        donut.rotation.y = Math.PI / -1.7;
-        this.scene.add(donut);
-        this.filling = donut.getObjectByName("filling");
-        this.icing = donut.getObjectByName("Icing001");
-        this.sprinkles = donut.getObjectByName("sprinkles");
-        this.crumble = donut.getObjectByName("crumble");
-        this.flakes = donut.getObjectByName("flakes");
+        createDonut((donut, filling, icing, sprinkles, crumble, flakes) => {
+            this.filling = filling;
+            this.icing = icing;
+            this.sprinkles = sprinkles;
+            this.crumble = crumble;
+            this.flakes = flakes;
+            this.scene.add(donut);
 
-        //code die pas uitgevoerd wordt als de donut geladen is
-        this.crumble.visible = false;
-        this.flakes.visible = false;
-        this.sprinkles.visible = true;
-
-        // Load card on donut
-        const card = createCard();
-        card.position.set(-0.005, 0.021, 0.025);
-        card.rotation.x = Math.PI / 0.51;
-        card.rotation.y = Math.PI / 1.08;
-
-        donut.add(card);
-        
-        this.loaded = true;
+            this.loaded = true;
+        });
     }
 
     loadIcing(flavour) {
@@ -80,11 +66,6 @@ export default class ThreeScene {
     }
     loadCrumble(flavour) {
         this.crumble.material.color.setHex(flavour);
-    }
-    modelSetup() {
-        //import donut glb
-        const loader = new GLTFLoader();
-        loader.load("/bignut.glb", this.loadDonut.bind(this));
     }
 
     orbitSetup() {

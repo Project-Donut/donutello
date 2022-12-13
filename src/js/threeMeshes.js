@@ -1,9 +1,8 @@
 import * as THREE from "three";
-/**
- *
- * @param {THREE.Scene} scene
- */
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 const textureLoader = new THREE.TextureLoader();
+const gltfLoader = new GLTFLoader();
+
 export const createCard = () => {
     const backGeometry = new THREE.BoxGeometry(0.03, 0.001, 0.03);
     const cardGeometry = new THREE.BoxGeometry(0.025, 0.001, 0.025);
@@ -38,3 +37,30 @@ export const createCard = () => {
 
     return label;
 };
+
+export const createDonut = (callback = () => null) => {
+    gltfLoader.load("/bignut.glb", (gltf) => {
+        let donut = gltf.scene;
+        donut.scale.set(40, 40, 40);
+        donut.rotation.y = Math.PI / -1.7;
+
+        let filling = donut.getObjectByName("filling");
+        let icing = donut.getObjectByName("Icing001");
+        let sprinkles = donut.getObjectByName("sprinkles");
+        let crumble = donut.getObjectByName("crumble");
+        let flakes = donut.getObjectByName("flakes");
+
+        crumble.visible = false;
+        flakes.visible = false;
+        sprinkles.visible = true;
+
+        // Load card on donut
+        const card = createCard();
+        card.position.set(-0.005, 0.021, 0.025);
+        card.rotation.x = Math.PI / 0.51;
+        card.rotation.y = Math.PI / 1.08;
+        donut.add(card);
+
+        callback(...[donut, filling, icing, sprinkles, crumble, flakes]);
+    });
+}; 
