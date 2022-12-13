@@ -1,6 +1,7 @@
 <script setup>
 //import vue
 import { ref, onMounted, reactive, defineProps } from 'vue';
+import UserDetails from './UserDetails.vue';
 import recipe from '../assets/flavours.json';
 //create reactive state to send to api
 let state = reactive({ order: [] });
@@ -127,7 +128,7 @@ const createOrder = () => {
         
 
 
-
+        <UserDetails />
         <button class="__input" href="#" @click="createOrder()">Save this Nutty man</button>
     </div>
 
