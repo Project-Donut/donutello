@@ -68,7 +68,7 @@ export default class ThreeScene {
         this.filling.material.color.setHex(flavour);
     }
     loadSprinkles(flavour) {
-        this.sprinkles.material.color.setHex(flavour.value);
+        this.sprinkles.material.color.setHex(flavour);
     }
     loadTopping(flavour) {
         this.sprinkles.material.color.setHex(flavour);

@@ -33,12 +33,13 @@ const updateFilling = () => {
         fillingFlavour = 'none';
     }
    
-    fillingFlavour = filling.value;
+    
 }
 const selectTopping = () => {
     const toppingsAll = [props.model.sprinkles, props.model.flakes, props.model.crumble ];
     toppingsAll.forEach(topping => { topping.visible = false; });
-    if (topping.value != 3) {
+    if (topping.value !== null && topping.value !== 3) {
+        
         toppingsAll[topping.value].visible = true;
         if(topping.value == 2){
             document.querySelector('.crumble').style.display = 'block';
@@ -47,13 +48,11 @@ const selectTopping = () => {
             document.querySelector('.crumble').style.display = 'none';
             document.querySelector('.topping').style.display = 'block';
         }
+        toppingSelected = flavour.value.toppings[topping.value].name;
     }
-     else {
-        toppingsAll.forEach(topping => {
-            topping.visible = false;
-        });
-        console.log(topping + ' is the topping')
-        toppingSelected = toppingsAll[topping.value].value;
+     else if(topping.value !== null){
+        toppingsAll.forEach(topping => { topping.visible = false; });
+        toppingSelected = flavour.value.toppings[topping.value].name;
     }
 }
 const updateTopping = () => {
@@ -102,10 +101,8 @@ const createOrder = () => {
 
         <label for="topping">Selecteer een topping!</label>
         <select name="topping" class="__input __input-topping" v-model="topping" @click="selectTopping()">
-            <option selected value=0>Sprinkles</option>
-            <option value=1>Flakes</option>
-            <option value=2>Crumble</option>
-            <option value=3>Geen topping</option>
+            <option disabled value=null>Please select a topping</option>
+            <option v-for="(flavour, index) in flavour.toppings" :value="index">{{ flavour.name }}</option>
         </select>
 
         
