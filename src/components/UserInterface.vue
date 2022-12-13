@@ -80,7 +80,7 @@ const onUpload = e => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-        labelImage = reader.result;
+        labelImage.value = reader.result;
         props.model.loadImage(reader.result);
     };
 }
