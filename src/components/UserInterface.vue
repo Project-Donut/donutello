@@ -14,7 +14,7 @@ let icing = ref(0);
 let topping = ref(0);
 let toppingFlavour = ref(null);
 let crumbleFlavour = ref(null);
-let filling = ref(null);
+let filling = ref(0);
 let fillingFlavour = ref(null);
 let toppingSelected = ref(null);
 let toppingFlavourSelected = ref(null);
@@ -26,7 +26,8 @@ const updateIcing = (e) => {
         icingFlavour = flavour.value.glaze[icing.value].taste;
     }
 }
-const updateFilling = () => {
+const updateFilling = (e) => {
+    filling.value = flavour.value.filling.findIndex(fill => fill.taste === e.value.taste);
     if (filling.value !== null && filling.value !== 4) {
         props.model.loadFilling(flavour.value.filling[filling.value].color);
         fillingFlavour = flavour.value.filling[filling.value].taste;
@@ -91,32 +92,43 @@ const onUpload = e => {
 <template>
     <div class="userInput">
         <input class="__input" type="text" placeholder="Name your nutty boy">
-
-        <label for="flavours">Choose your flavour</label>
-        <DropDown :modelValue="flavour.glaze[icing]" :options="flavour.glaze" @change="updateIcing">
-            <template #value="slot">
-                <div class="option" v-if="slot.value">
-                    <div class="option__color" :style="{backgroundColor: slot.value?.color.replace('0x', '#')}"></div>
-                    <div>{{ slot.value?.taste }}</div>
-                </div>
-                <div v-else>{{ slot.placeholder }}</div>
-            </template>
-            <template #option="{ option }">
-                <div class="option">
-                    <div class="option__color" :style="{backgroundColor: option?.color.replace('0x', '#')}"></div>
-                    <div>{{ option.taste }}</div>
-                </div>
-            </template>
-        </DropDown>
-       
-
-        <label for="filling">Fill me up baby</label>
-        <select name="filling" class="__input __input-filling" v-model="filling" @click="updateFilling()">
-            <option disabled value=null>Please select a flavour</option>
-            <option v-for="(flavour, index) in flavour.filling" :value="index">{{ flavour.taste }}</option>
-        </select>
-
-        <label for="topping">Selecteer een topping!</label>
+        <div class="__input--group">
+            <label for="flavours">Welke glazuur wil je?</label>
+            <DropDown :modelValue="flavour.glaze[icing]" :options="flavour.glaze" @change="updateIcing">
+                <template #value="slot">
+                    <div class="option" v-if="slot.value">
+                        <div class="option__color" :style="{ backgroundColor: slot.value?.color.replace('0x', '#') }"></div>
+                        <div>{{ slot.value?.taste }}</div>
+                    </div>
+                    <div v-else>{{ slot.placeholder }}</div>
+                </template>
+                <template #option="{ option }">
+                    <div class="option">
+                        <div class="option__color" :style="{ backgroundColor: option?.color.replace('0x', '#') }"></div>
+                        <div>{{ option.taste }}</div>
+                    </div>
+                </template>
+            </DropDown>
+        </div>
+        <div class="__input--group">
+            <label for="filling">Wat zit er in verstopt?</label>
+            <DropDown :modelValue="flavour.filling[filling]" :options="flavour.filling" @change="updateFilling">
+                <template #value="slot">
+                    <div class="option" v-if="slot.value">
+                        <div class="option__color" :style="{ backgroundColor: slot.value?.color.replace('0x', '#') }"></div>
+                        <div>{{ slot.value?.taste }}</div>
+                    </div>
+                    <div v-else>{{ slot.placeholder }}</div>
+                </template>
+                <template #option="{ option }">
+                    <div class="option">
+                        <div class="option__color" :style="{ backgroundColor: option?.color.replace('0x', '#') }"></div>
+                        <div>{{ option.taste }}</div>
+                    </div>
+                </template>
+            </DropDown>
+        </div>
+        <label for="topping">Strooi er wat over!</label>
         <select name="topping" class="__input __input-topping" v-model="topping" @click="selectTopping()">
             <option disabled value=null>Please select a topping</option>
             <option v-for="(flavour, index) in flavour.toppings" :value="index">{{ flavour.name }}</option>
@@ -141,8 +153,8 @@ const onUpload = e => {
         </div>
         <div class="imageUpload">
             <label for="imageUpload">Upload een cool label 😎</label>
-            <FileUpload mode="basic" accept="image/*" :maxFileSize="500000" :customUpload="true" @uploader="onUpload" :auto="true"
-                chooseLabel="Upload Afbeelding" />
+            <FileUpload mode="basic" accept="image/*" :maxFileSize="500000" :customUpload="true" @uploader="onUpload"
+                :auto="true" chooseLabel="Upload Afbeelding" />
         </div>
 
         <UserDetails />
@@ -168,6 +180,11 @@ const onUpload = e => {
     margin-bottom: 2em;
     border: 2px solid white;
     border-radius: 5px;
+}
+
+.__input--group {
+    display: flex;
+    flex-direction: column;
 }
 
 .topping {
