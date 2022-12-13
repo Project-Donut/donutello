@@ -57,17 +57,19 @@ const selectTopping = () => {
     }
 }
 const updateTopping = () => {
-    if (toppingFlavour.value && topping.value != 2) {
+    if (toppingFlavour.value !==null && topping.value !== 2) {
         console.log(toppingFlavour.value);
 
         props.model.loadTopping(flavour.value.sprinkles[toppingFlavour.value].color);
+        toppingFlavourSelected = flavour.value.crumble[toppingFlavour.value].name;
     } else if (crumbleFlavour.value) {
         console.log(crumbleFlavour.value);
 
         props.model.loadCrumble(flavour.value.crumble[toppingFlavour.value].color);
+        toppingFlavourSelected = flavour.value.crumble[crumbleFlavour.value].name;
     }
-    console.log(toppingFlavour + ' is the topping flavour')
-    toppingFlavourSelected = toppingFlavour;
+    
+    
 }
 
 const createOrder = () => {
