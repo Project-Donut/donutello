@@ -56,6 +56,10 @@ export default class ThreeScene {
 
         // Load card on donut
         const card = createCard();
+        card.position.set(-0.005, 0.021, 0.025);
+        card.rotation.x = Math.PI / 0.51;
+        card.rotation.y = Math.PI / 1.08;
+
         donut.add(card);
         
         this.loaded = true;
