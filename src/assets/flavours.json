@@ -1,92 +1,89 @@
 {
     "glaze": [
         {
-        "taste": "Aardbei",
-        "color": "0xc71639"
+            "taste": "Aardbei",
+            "color": "0xc71639"
         },
-      {
-        "taste": "Chocolade",
-        "color": "0x592720"
-      },
-      {
-        "taste": "Snickers",
-        "color": "0xbc6138"
-      },
-      {
-        "taste": "Oreo",
-        "color": "0xdee0e0"
-      },
-      {
-        "taste": "Limoen",
-        "color": "0xafc7b4"
-      },
-      {
-        "taste": "Kokos",
-        "color": "0xedf2f3"
-      },
-      {
-        "taste": "Kersen",
-        "color": "0xee6fb1"
-      },
-      {
-        "taste": "Pistache",
-        "color": "0x9cbe80"
-      }
+        {
+            "taste": "Chocolade",
+            "color": "0x592720"
+        },
+        {
+            "taste": "Snickers",
+            "color": "0xbc6138"
+        },
+        {
+            "taste": "Oreo",
+            "color": "0xdee0e0"
+        },
+        {
+            "taste": "Limoen",
+            "color": "0xafc7b4"
+        },
+        {
+            "taste": "Kokos",
+            "color": "0xedf2f3"
+        },
+        {
+            "taste": "Kersen",
+            "color": "0xee6fb1"
+        },
+        {
+            "taste": "Pistache",
+            "color": "0x9cbe80"
+        }
     ],
-    "toppings":[
-      {
-        "name": "Sprinkles"
-       }, 
-       {
-        "name": "Flakes"
-       }, 
-       {
-        "name": "Crumble"
-       }, 
-       {
-        "name": "Geen topping"
-       }
+    "toppings": [
+        {
+            "name": "Geen"
+        },
+        {
+            "name": "Sprinkles"
+        },
+        {
+            "name": "Flakes"
+        },
+        {
+            "name": "Crumble"
+        }
     ],
     "sprinkles": [
-      {
-        "name": "Wit",
-        "color": "0xf8f6f0"
-        
-      }, 
-      {
-        "name": "Roze",
-        "color": "0xef9baa"
-        
-      }, 
-      {
-        "name": "Bruin",
-        "color": "0x592720"
-
-      }
+        {
+            "name": "Wit",
+            "color": "0xf8f6f0"
+        },
+        {
+            "name": "Roze",
+            "color": "0xef9baa"
+        },
+        {
+            "name": "Bruin",
+            "color": "0x592720"
+        }
     ],
     "crumble": [
-      {
-        "name": "Oreo",
-        "color": "0xdee0e0"
-        
-      }, 
-      {
-        "name": "Snickers",
-        "color": "0xbc6138"
-        
-      }, 
-      {
-        "name": "Kokos",
-        "color": "0xedf2f3"
-
-      },
-      {
-        "name": "Pistache",
-        "color": "0x9cbe80"
-
-      }
+        {
+            "name": "Oreo",
+            "color": "0xdee0e0"
+        },
+        {
+            "name": "Snickers",
+            "color": "0xbc6138"
+        },
+        {
+            "name": "Kokos",
+            "color": "0xedf2f3"
+        },
+        {
+            "name": "Pistache",
+            "color": "0x9cbe80"
+        }
     ],
-    "filling":[
+    "filling": [
+        {
+            "taste": "Geen",
+            "color": "0x00000000"
+        },
         {
             "taste": "Pudding",
             "color": "0xffe683"
@@ -102,10 +99,6 @@
         {
             "taste": "Willekeurig",
             "color": "0xef9baa"
-        },
-        {
-            "taste": "Geen",
-            "color": "0x000000"
         }
     ]
-  }
+}

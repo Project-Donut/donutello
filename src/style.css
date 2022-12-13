@@ -1,5 +1,10 @@
+:root {
+    --primary-color: #FF4C8E;
+}
+
 body{
     margin: 0;
     max-height: 100vh;
     overflow: hidden;
 }
+
