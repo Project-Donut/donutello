@@ -1,6 +1,7 @@
 <script setup>
 //import vue
 import { ref, onMounted, reactive, defineProps } from 'vue';
+import UserDetails from './UserDetails.vue';
 import recipe from '../assets/flavours.json';
 //create reactive state to send to api
 let state = reactive({ order: [] });
@@ -126,6 +127,8 @@ const createOrder = () => {
                 <label for="imageUpload">Upload een cool label 😎</label>
                 <FileUpload mode="basic" accept="image/*" :maxFileSize="500000" @upload="onUpload" :auto="true" chooseLabel="Browse" />
             </div>
+        
+        <UserDetails />
         <button class="__input" href="#" @click="createOrder()">Save this Nutty man</button>
     </div>
 
