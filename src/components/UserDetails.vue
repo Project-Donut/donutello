@@ -8,7 +8,6 @@ const displayModal = ref(false);
 const displayBasic = ref(false);
 const openModal = () => {
     displayModal.value = true;
-    console.log(props.donutDetails);
 };
 const closeModal = () => {
     displayModal.value = false;
@@ -105,7 +104,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <Button label="Ga naar bestellen" icon="pi pi-chevron-right" @click="openModal" />
+    <Button label="Ga naar bestellen" icon="pi pi-chevron-right" class="__place-order__button--order" @click="openModal" />
     <Dialog header="Bestelling" v-model:visible="displayModal" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
         :style="{ width: '50vw', background: '#e72c70' }" :modal="true">
         <h3>Gegevens</h3>
@@ -278,7 +277,7 @@ p {
     justify-content: center;
 }
 
-.p-button {
+.__place-order__button--order {
     margin: 0;
     position: absolute;
     bottom: 1em;
