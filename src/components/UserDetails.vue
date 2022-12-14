@@ -27,7 +27,7 @@ let customer = reactive({
     bedrijf: '',
     mail: '',
     tel: '',
-    count: '',
+    count: 50,
     date: '',
     adresLever1: '',
     adresLever2: '',
@@ -151,7 +151,7 @@ onMounted(() => {
             <div class="__inputGroup">
                 <div class="__inputText">
                     <h5>Aantal donuts</h5>
-                    <InputText type="text" v-model="customer.count" />
+                    <InputNumber v-model="customer.count" :min="50" />
                     <span :style="{ marginLeft: '.5em' }"></span>
                 </div>
                 <div class="__inputText">

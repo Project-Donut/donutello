@@ -10,6 +10,7 @@ import './prime_override.css';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
+import InputNumber from 'primevue/inputnumber';
 import InputSwitch from 'primevue/inputswitch';
 import DropDown from 'primevue/dropdown';
 import Calendar from 'primevue/calendar';
@@ -23,5 +24,6 @@ app.component("Dialog", Dialog);
 app.component("Button", Button);
 app.component("DropDown", DropDown);
 app.component("InputText", InputText);
+app.component("InputNumber", InputNumber);
 
 app.mount('#app');
