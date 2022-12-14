@@ -168,7 +168,7 @@ const onUpload = e => {
             </template>
             <div class="imageUpload">
                 <label for="imageUpload">Upload een cool label 😎</label>
-                <FileUpload mode="basic" class="p-button-outlined" accept="image/*" :maxFileSize="500000"
+                <FileUpload mode="basic" class="p-button-outlined" accept="image/*" :maxFileSize="50000"
                     :customUpload="true" @uploader="onUpload" :auto="true" chooseLabel="Upload Afbeelding" />
             </div>
         </div>
